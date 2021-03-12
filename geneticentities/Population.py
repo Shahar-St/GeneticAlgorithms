@@ -20,6 +20,12 @@ class Population:
         self._mean = None
         self._standardDeviation = None
 
+    def __getitem__(self, item):
+        return self._citizens[item]
+
+    def __len__(self):
+        return len(self._citizens)
+
     def updateFitness(self):
         fitnessValues = []
         for citizen in self._citizens:
@@ -33,9 +39,6 @@ class Population:
 
     def getCitizenAtIndex(self, index):
         return self._citizens[index]
-
-    def getCitizens(self):
-        return self._citizens
 
     def setCitizens(self, citizens):
         self._citizens = citizens
