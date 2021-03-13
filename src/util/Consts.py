@@ -1,7 +1,7 @@
 import string
 
 GA_POP_SIZE = 600  # ga population size
-GA_MAX_ITER = 200  # maximum iterations
+GA_MAX_ITER = 300  # maximum iterations
 
 GA_TARGET = 'Hello world!'
 

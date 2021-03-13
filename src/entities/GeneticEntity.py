@@ -1,5 +1,6 @@
 import random
 
+import numpy as np
 
 from entities.IndividualEntity import IndividualEntity
 from util.Consts import ALLOWED_CHARS
@@ -8,7 +9,7 @@ from util.Consts import ALLOWED_CHARS
 class GeneticEntity(IndividualEntity):
 
     def getVec(self):
-        vec = [ord(c) for c in self.getStr()]
+        vec = np.array([ord(c) for c in self.getStr()])
         return vec
 
     def mutate(self):

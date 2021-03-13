@@ -2,6 +2,7 @@ from algorithms.PSO import PSO
 from entities.crossovers.UniformCrossover import UniformCrossover
 from fitness.AsciiDistance import AsciiDistance
 from algorithms.GeneticAlgorithm import GeneticAlgorithm
+from fitness.BullsAndCows import BullsAndCows
 from util.Consts import GA_TARGET, GA_POP_SIZE, GA_ELITE_RATE, GA_MUTATION_RATE, GA_MAX_ITER
 
 
