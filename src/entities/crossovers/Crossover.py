@@ -1,9 +1,10 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
-class Crossover:
+
+class Crossover(ABC):
 
     def __init__(self, targetWord):
-        self.targetWord = targetWord
+        self._targetWord = targetWord
 
     @abstractmethod
     def makeNewChild(self, parent1, parent2):
