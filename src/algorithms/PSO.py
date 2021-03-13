@@ -4,7 +4,7 @@ import numpy as np
 
 from algorithms.Algorithm import Algorithm
 from entities.PsoParticle import PsoParticle
-from util.Consts import ALLOWED_CHARS
+from util.Consts import ALLOWED_CHARS, COGNITIVE_WEIGHT, SOCIAL_WEIGHT
 
 
 class PSO(Algorithm):
@@ -25,7 +25,7 @@ class PSO(Algorithm):
             particle.setFitness(fitness)
             if fitness < self._gBestVal:
                 self._gBestVal = fitness
-                self._gBestVec = particle.getVec()
+                self._gBestVec = np.copy(particle.getVec())
                 if fitness == 0:
                     self._solutionFound = True
 
@@ -40,14 +40,11 @@ class PSO(Algorithm):
                 particle = self._swarm[j]
 
                 cognitiveRand = random.random()
-                cognitiveWeight = 2
-
                 socialRand = random.random()
-                socialWeight = 2
 
                 newInertia = inertiaArr[i] * particle.getVelocity()
-                newCognitiveComp = cognitiveWeight * cognitiveRand * (particle.getPBestVec() - particle.getVec())
-                newSocialComp = socialWeight * socialRand * (self._gBestVec - particle.getVec())
+                newCognitiveComp = COGNITIVE_WEIGHT * cognitiveRand * (particle.getPBestVec() - particle.getVec())
+                newSocialComp = SOCIAL_WEIGHT * socialRand * (self._gBestVec - particle.getVec())
                 newVelocity = newInertia + newCognitiveComp + newSocialComp
 
                 particle.updatePosition(newVelocity)

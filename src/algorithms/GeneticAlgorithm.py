@@ -4,7 +4,7 @@ import numpy as np
 
 from algorithms.Algorithm import Algorithm
 from entities.GeneticEntity import GeneticEntity
-from util.Consts import ALLOWED_CHARS, BEST
+from util.Consts import ALLOWED_CHARS, BEST, GA_CONTINUATION_RATE
 
 
 class GeneticAlgorithm(Algorithm):
@@ -49,8 +49,8 @@ class GeneticAlgorithm(Algorithm):
 
         for i in range(eliteSize, self._popSize):
 
-            parent1 = self._citizens[random.randrange(int(self._popSize / 2))]
-            parent2 = self._citizens[random.randrange(int(self._popSize / 2))]
+            parent1 = self._citizens[random.randrange(int(self._popSize * GA_CONTINUATION_RATE))]
+            parent2 = self._citizens[random.randrange(int(self._popSize * GA_CONTINUATION_RATE))]
 
             newChild = self._crossoverFunc(parent1, parent2)
 
