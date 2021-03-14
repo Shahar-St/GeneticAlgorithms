@@ -1,10 +1,13 @@
 import random
+import time
+
+import psutil
 
 import numpy as np
 
 from algorithms.Algorithm import Algorithm
 from entities.GeneticEntity import GeneticEntity
-from util.Consts import ALLOWED_CHARS, BEST, GA_CONTINUATION_RATE
+from util.Consts import ALLOWED_CHARS, BEST, GA_CONTINUATION_RATE, CLOCK_RATE
 
 
 class GeneticAlgorithm(Algorithm):
@@ -24,21 +27,38 @@ class GeneticAlgorithm(Algorithm):
         self._mutationRate = mutationRate
 
     def findSolution(self, maxIter):
+        startTime = time.time()
         self.updateFitness()
+
         best = self._citizens[BEST]
 
         # iterative improvement
         iterCounter = 0
         while best.getFitness() != 0 and iterCounter < maxIter:
+
             print(f'Best: {best.getStr()} ({best.getFitness()}). Mean: {self._mean:.2f},'
                   f' STD: {self._standardDeviation:.2f}')
+
+            endTime = time.time()
+            elapsedTime = endTime - startTime
+            print("This generation took", elapsedTime * CLOCK_RATE, "clock ticks")
+
+            startTime = time.time()
 
             self._mate()
 
             self.updateFitness()
             best = self._citizens[BEST]
             iterCounter += 1
-        print(f'Best: {best.getStr()} ({best.getFitness()})')
+
+        print(f'Best: {best.getStr()} ({best.getFitness()}). Mean: {self._mean:.2f},'
+              f' STD: {self._standardDeviation:.2f}')
+
+        endTime = time.time()
+        elapsedTime = endTime - startTime
+        print("This generation took", elapsedTime * CLOCK_RATE, "clock ticks \n")
+
+        print("Number of iterations:", iterCounter, "\n")
 
     def _mate(self):
         eliteSize = int(self._popSize * self._eliteRate)

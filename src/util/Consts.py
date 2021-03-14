@@ -1,7 +1,11 @@
 import string
 
+import psutil
+
 GA_POP_SIZE = 600  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
+
+CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
 
 GA_TARGET = 'Hello world!'
 
