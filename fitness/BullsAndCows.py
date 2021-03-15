@@ -3,14 +3,16 @@ from fitness.FitnessFunction import FitnessFunction
 
 class BullsAndCows(FitnessFunction):
 
-    def __init__(self, targetVal):
-        super().__init__(targetVal)
+    def __init__(self, problem):
+        super().__init__(problem)
 
     def calculate(self, vector):
 
+        targetVec = self._problem.getTargetVec()
+
         fitness = 0
         tempVec = vector.tolist()
-        targetVec = [ord(c) for c in self._targetVal]
+        targetVec = [ord(c) for c in targetVec]
 
         i = 0
         while i < len(targetVec):

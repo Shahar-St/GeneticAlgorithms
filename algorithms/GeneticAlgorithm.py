@@ -10,12 +10,11 @@ from util.Consts import ALLOWED_CHARS, BEST, GA_CONTINUATION_RATE, CLOCK_RATE
 
 class GeneticAlgorithm(Algorithm):
 
-    def __init__(self, target, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate):
-        super().__init__(target, fitnessFunction, popSize)
+    def __init__(self, targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate):
+        super().__init__(targetSize, fitnessFunction, popSize)
 
-        stringSize = len(target)
         self._citizens = np.array(
-            [GeneticEntity(''.join(random.choice(ALLOWED_CHARS) for _ in range(stringSize))) for _ in
+            [GeneticEntity(''.join(random.choice(ALLOWED_CHARS) for _ in range(targetSize))) for _ in
              range(popSize)])
 
         self._mean = None

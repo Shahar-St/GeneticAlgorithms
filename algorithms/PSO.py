@@ -9,10 +9,10 @@ from util.Consts import ALLOWED_CHARS, COGNITIVE_WEIGHT, SOCIAL_WEIGHT
 
 class PSO(Algorithm):
 
-    def __init__(self, target, fitnessFunction, popSize):
-        super().__init__(target, fitnessFunction, popSize)
+    def __init__(self, targetSize, fitnessFunction, popSize):
+        super().__init__(targetSize, fitnessFunction, popSize)
         self._swarm = np.array(
-            [PsoParticle(''.join(random.choice(ALLOWED_CHARS) for _ in range(len(target)))) for _ in
+            [PsoParticle(''.join(random.choice(ALLOWED_CHARS) for _ in range(targetSize))) for _ in
              range(popSize)])
         self._gBestVal = np.inf
         self._gBestVec = None
