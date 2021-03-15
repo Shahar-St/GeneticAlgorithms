@@ -60,6 +60,8 @@ class GeneticAlgorithm(Algorithm):
 
         print("Number of iterations:", iterCounter, "\n")
 
+        return best.getVec()
+
     def _mate(self):
         eliteSize = int(self._popSize * self._eliteRate)
 
