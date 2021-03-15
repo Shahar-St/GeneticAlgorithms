@@ -9,13 +9,27 @@ CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
 
 GA_TARGET = 'Hello world!'
 
-UNWANTED_CHARS = ['\t', '\n', '\x0b', '\x0c', '\r']
+UNWANTED_CHARS = ('\t', '\n', '\x0b', '\x0c', '\r')
 
-ALLOWED_CHARS = [c for c in string.printable if c not in UNWANTED_CHARS]
+ALLOWED_CHARS = tuple(c for c in string.printable if c not in UNWANTED_CHARS)
 LOWER_BOUND = 32
 UPPER_BOUND = 126
 
 BEST = 0
+
+'''------------------DEFAULT_PARSER-------------------'''
+
+DEFAULT_ALGORITHM = 'GeneticAlgorithm'
+DEFAULT_CROSSOVER = 'SinglePointCrossover'
+DEFAULT_FITNESS = 'AsciiDistance'
+
+
+'''------------------ALLOWED_NAMED_PARSER-------------------'''
+
+ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
+ALLOWED_CROSS_NAMES = ('SinglePointCrossover', 'UniformPointCrossover', 'TowPointCrossover')
+ALLOWED_FITNESS_NAMES = ('AsciiDistance', 'BullsAndCows')
+
 
 '''------------------GA-------------------'''
 GA_ELITE_RATE = 0.1  # elitism rate

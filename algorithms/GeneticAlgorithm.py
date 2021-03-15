@@ -1,8 +1,6 @@
 import random
 import time
 
-import psutil
-
 import numpy as np
 
 from algorithms.Algorithm import Algorithm
@@ -58,7 +56,7 @@ class GeneticAlgorithm(Algorithm):
         elapsedTime = endTime - startTime
         print("This generation took", elapsedTime * CLOCK_RATE, "clock ticks \n")
 
-        print("Number of iterations:", iterCounter, "\n")
+        print(f'Number of iterations: {iterCounter}\n')
 
         return best.getVec()
 
