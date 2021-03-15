@@ -5,12 +5,15 @@ import numpy as np
 
 from algorithms.Algorithm import Algorithm
 from entities.GeneticEntity import GeneticEntity
-from util.Consts import ALLOWED_CHARS, BEST, GA_CONTINUATION_RATE, CLOCK_RATE
+from entities.parentselection.RandomParentSelection import RandomParentSelection
+
+from util.Consts import ALLOWED_CHARS, BEST, CLOCK_RATE
 
 
 class GeneticAlgorithm(Algorithm):
 
-    def __init__(self, targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate):
+    def __init__(self, targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate,
+                 parentSelectionFunction):
         super().__init__(targetSize, fitnessFunction, popSize)
 
         self._citizens = np.array(
@@ -22,6 +25,7 @@ class GeneticAlgorithm(Algorithm):
         self._eliteRate = eliteRate
         self._crossoverFunc = crossoverFunc
         self._mutationRate = mutationRate
+        self._parentSelectionFunction = parentSelectionFunction
 
     def findSolution(self, maxIter):
         startTime = time.time()
@@ -53,7 +57,7 @@ class GeneticAlgorithm(Algorithm):
 
         endTime = time.time()
         elapsedTime = endTime - startTime
-        print("This generation took", elapsedTime * CLOCK_RATE, "clock ticks \n")
+        print(f'This generation took {elapsedTime * CLOCK_RATE} clock ticks \n')
 
         print(f'Number of iterations: {iterCounter}\n')
 
@@ -68,8 +72,7 @@ class GeneticAlgorithm(Algorithm):
 
         for i in range(eliteSize, self._popSize):
 
-            parent1 = self._citizens[random.randrange(int(self._popSize * GA_CONTINUATION_RATE))]
-            parent2 = self._citizens[random.randrange(int(self._popSize * GA_CONTINUATION_RATE))]
+            parent1, parent2 = self._parentSelectionFunction.getParents(self._citizens)
 
             newChild = self._crossoverFunc(parent1, parent2)
 

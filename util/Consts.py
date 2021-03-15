@@ -23,6 +23,7 @@ DEFAULT_ALGORITHM = 'GeneticAlgorithm'
 DEFAULT_CROSSOVER = 'SinglePointCrossover'
 DEFAULT_FITNESS = 'AsciiDistance'
 DEFAULT_PROBLEM = 'StringMatching'
+DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
 
 '''------------------ALLOWED_NAMED_PARSER-------------------'''
 
@@ -30,6 +31,7 @@ ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
 ALLOWED_CROSS_NAMES = ('SinglePointCrossover', 'UniformPointCrossover', 'TowPointCrossover')
 ALLOWED_FITNESS_NAMES = ('AsciiDistance', 'BullsAndCows')
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
+ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection')
 
 '''------------------GA-------------------'''
 GA_ELITE_RATE = 0.1  # elitism rate
