@@ -8,24 +8,27 @@ from entities.GeneticEntity import GeneticEntity
 from entities.parentselection.RandomParentSelection import RandomParentSelection
 
 from util.Consts import ALLOWED_CHARS, BEST, CLOCK_RATE
+from util.Consts import BEST, GA_CONTINUATION_RATE, CLOCK_RATE
 
 
 class GeneticAlgorithm(Algorithm):
 
-    def __init__(self, targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate,
-                 parentSelectionFunction):
-        super().__init__(targetSize, fitnessFunction, popSize)
+    def __init__(self, problem, popSize, eliteRate, crossoverFunc, mutationRate,
+                 mutationFunction, parentSelectionFunction):
+        super().__init__(problem, popSize)
 
         self._citizens = np.array(
-            [GeneticEntity(''.join(random.choice(ALLOWED_CHARS) for _ in range(targetSize))) for _ in
+            [GeneticEntity(problem.generateRandomVec()) for _ in
              range(popSize)])
 
         self._mean = None
         self._standardDeviation = None
         self._eliteRate = eliteRate
         self._crossoverFunc = crossoverFunc
+        self._mutationFunction = mutationFunction
         self._mutationRate = mutationRate
         self._parentSelectionFunction = parentSelectionFunction
+        self._problem = problem
 
     def findSolution(self, maxIter):
         startTime = time.time()
@@ -37,7 +40,7 @@ class GeneticAlgorithm(Algorithm):
         iterCounter = 0
         while best.getFitness() != 0 and iterCounter < maxIter:
 
-            print(f'Best: {best.getStr()} ({best.getFitness()}). Mean: {self._mean:.2f},'
+            print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
                   f' STD: {self._standardDeviation:.2f}')
 
             endTime = time.time()
@@ -52,7 +55,7 @@ class GeneticAlgorithm(Algorithm):
             best = self._citizens[BEST]
             iterCounter += 1
 
-        print(f'Best: {best.getStr()} ({best.getFitness()}). Mean: {self._mean:.2f},'
+        print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
               f' STD: {self._standardDeviation:.2f}')
 
         endTime = time.time()
@@ -77,7 +80,7 @@ class GeneticAlgorithm(Algorithm):
             newChild = self._crossoverFunc(parent1, parent2)
 
             if random.random() < self._mutationRate:
-                newChild.mutate()
+                newChild.setVec(self._mutationFunction(newChild.getVec()))
 
             tempPopulation.append(newChild)
 
@@ -86,7 +89,7 @@ class GeneticAlgorithm(Algorithm):
     def updateFitness(self):
         fitnessValues = []
         for citizen in self._citizens:
-            fitnessVal = self._fitnessFunction(citizen.getVec())
+            fitnessVal = self._problem.calculateFitness(citizen.getVec())
             citizen.setFitness(fitnessVal)
             fitnessValues.append(fitnessVal)
 

@@ -4,28 +4,32 @@ from abc import ABC, abstractmethod
 
 class Algorithm(ABC):
 
-    def __init__(self, targetSize, fitnessFunction, popSize):
+    def __init__(self, problem, popSize):
         self._popSize = popSize
-        self._fitnessFunction = fitnessFunction
-        self._targetSize = targetSize
-
-    def getPopSize(self):
-        return self._popSize
+        self._problem = problem
 
     @abstractmethod
     def findSolution(self, maxIter):
         raise NotImplementedError
 
     @staticmethod
-    def factory(AlgoName, targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate,
-                parentSelectionFunction):
-        module = importlib.import_module('algorithms.' + AlgoName)
+    def factory(algoName, popSize, eliteRate, crossoverFunc, mutationRate,
+                mutationFunction, parentSelectionFunction, problem):
+        module = importlib.import_module('algorithms.' + algoName)
 
-        algo = getattr(module, AlgoName)
+        algo = getattr(module, algoName)
 
-        if AlgoName == 'PSO':
-            return algo(targetSize, fitnessFunction, popSize)
+        if algoName == 'PSO':
+            return algo(problem=problem,
+                        popSize=popSize
+                        )
 
-        if AlgoName == 'GeneticAlgorithm':
-            return algo(targetSize, fitnessFunction, popSize, eliteRate, crossoverFunc, mutationRate,
-                        parentSelectionFunction)
+        if algoName == 'GeneticAlgorithm':
+            return algo(problem=problem,
+                        popSize=popSize,
+                        eliteRate=eliteRate,
+                        crossoverFunc=crossoverFunc,
+                        mutationRate=mutationRate,
+                        mutationFunction=mutationFunction,
+                        parentSelectionFunction=parentSelectionFunction
+                        )

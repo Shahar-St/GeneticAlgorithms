@@ -1,22 +1,15 @@
-import random
+import numpy as np
 
 from entities.crossovers.Crossover import Crossover
 from entities.GeneticEntity import GeneticEntity
+from util.Util import getValidIndexes
 
 
 class TwoPointCrossover(Crossover):
 
     def makeNewChild(self, parent1, parent2):
-        matingIndex1 = random.randrange(len(self._targetWord))
-        # ensure index1 != index2
-        matingIndex2 = random.choice([i for i in range(len(self._targetWord)) if i != matingIndex1])
-
-        # ensure index1 < index2
-        if matingIndex1 > matingIndex2:
-            temp = matingIndex1
-            matingIndex1 = matingIndex2
-            matingIndex2 = temp
-
-        childStr = parent1.getStr()[:matingIndex1] + parent2.getStr()[matingIndex1:matingIndex2] + parent1.getStr()[
-                                                                                                   matingIndex2:]
-        return GeneticEntity(childStr)
+        matingIndex1, matingIndex2 = getValidIndexes(len(parent1.getVec()))
+        childVec = np.concatenate(
+            (parent1.getVec()[:matingIndex1], parent2.getVec()[matingIndex1:matingIndex2],
+             parent1.getVec()[matingIndex2:]))
+        return GeneticEntity(childVec)

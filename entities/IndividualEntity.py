@@ -3,10 +3,12 @@ from abc import ABC, abstractmethod
 
 class IndividualEntity(ABC):
 
-    def __init__(self, stringVal):
-        self._stringVal = stringVal
+    def __init__(self, vec):
         self._fitness = 0
-        self._vec = None
+        self._vec = vec
+
+    def setVec(self, newVec):
+        self._vec = newVec
 
     def getFitness(self):
         return self._fitness
@@ -14,12 +16,8 @@ class IndividualEntity(ABC):
     def setFitness(self, fitness):
         self._fitness = fitness
 
-    def getStr(self):
-        return self._stringVal
-
-    @abstractmethod
     def getVec(self):
-        raise NotImplementedError
+        return self._vec
 
     def __lt__(self, other):
         return self._fitness < other.getFitness()

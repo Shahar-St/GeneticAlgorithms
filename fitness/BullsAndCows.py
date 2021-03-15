@@ -3,34 +3,30 @@ from fitness.FitnessFunction import FitnessFunction
 
 class BullsAndCows(FitnessFunction):
 
-    def __init__(self, problem):
-        super().__init__(problem)
 
-    def calculate(self, vector):
-
-        targetVec = self._problem.getTargetVec()
+    def calculate(self, targetVec, vector):
 
         fitness = 0
+        tempTargetVec = targetVec.tolist()
         tempVec = vector.tolist()
-        targetVec = [ord(c) for c in targetVec]
 
         i = 0
-        while i < len(targetVec):
-            if tempVec[i] == targetVec[i]:
+        while i < len(tempTargetVec):
+            if tempVec[i] == tempTargetVec[i]:
                 tempVec.pop(i)
-                targetVec.pop(i)
+                tempTargetVec.pop(i)
             else:
                 i += 1
 
         i = 0
         while i < len(tempVec):
-            if tempVec[i] in targetVec:
+            if tempVec[i] in tempTargetVec:
                 fitness += 1
-                targetIndex = targetVec.index(tempVec[i])
-                targetVec.pop(targetIndex)
+                targetIndex = tempTargetVec.index(tempVec[i])
+                tempTargetVec.pop(targetIndex)
 
             i += 1
 
-        fitness += len(targetVec) * 2
+        fitness += len(tempTargetVec) * 2
 
         return fitness

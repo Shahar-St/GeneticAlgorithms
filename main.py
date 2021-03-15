@@ -3,12 +3,11 @@ import time
 import argparse
 from algorithms.Algorithm import Algorithm
 from entities.crossovers.Crossover import Crossover
+from entities.mutations.Mutation import Mutation
 from entities.parentselection.ParentSelection import ParentSelection
 from fitness.FitnessFunction import FitnessFunction
 from problems.Problem import Problem
-from util.Consts import GA_TARGET, GA_POP_SIZE, GA_ELITE_RATE, GA_MUTATION_RATE, GA_MAX_ITER, ALLOWED_ALGO_NAMES, \
-    ALLOWED_FITNESS_NAMES, ALLOWED_CROSS_NAMES, CLOCK_RATE, DEFAULT_FITNESS, DEFAULT_CROSSOVER, DEFAULT_ALGORITHM, \
-    DEFAULT_PROBLEM, ALLOWED_PROBLEM_NAMES, DEFAULT_PARENT_SELECTION_FUNC, ALLOWED_PARENT_SELECTION_FUNC_NAMES
+from util.Consts import *
 
 
 def main():
@@ -21,6 +20,7 @@ def main():
     parser.add_argument('-f', '--fitness', default=DEFAULT_FITNESS, help='the fitness will be process')
     parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM, help='Problem to be solved')
     parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='Problem to be solved')
+    parser.add_argument('-m', '--mutation', default=DEFAULT_MUTATION, help='Mutation method to be used')
     args = parser.parse_args()
 
     if args.algo not in ALLOWED_ALGO_NAMES:
@@ -38,13 +38,25 @@ def main():
     if args.parentSelection not in ALLOWED_PARENT_SELECTION_FUNC_NAMES:
         print("invalid parent selection function! \n")
         return
+    if args.mutation not in ALLOWED_MUTATION_NAMES:
+        return
 
-    problem = Problem.factory(args.problem, GA_TARGET)
-    fitnessFunction = FitnessFunction.factory(args.fitness, problem).calculate
-    crossoverFunction = Crossover.factory(args.cross, GA_TARGET).makeNewChild
+    fitnessFunction = FitnessFunction.factory(args.fitness).calculate
+    problem = Problem.factory(args.problem, GA_TARGET, fitnessFunction)
+
+    crossoverFunction = Crossover.factory(args.cross).makeNewChild
     parentSelectionFunction = ParentSelection.factory(args.parentSelection)
-    algo = Algorithm.factory(args.algo, len(GA_TARGET), fitnessFunction, GA_POP_SIZE, GA_ELITE_RATE, crossoverFunction,
-                             GA_MUTATION_RATE, parentSelectionFunction)
+    mutationFunction = Mutation.factory(args.mutation).mutate
+
+    algo = Algorithm.factory(algoName=args.algo,
+                             popSize=GA_POP_SIZE,
+                             eliteRate=GA_ELITE_RATE,
+                             crossoverFunc=crossoverFunction,
+                             mutationRate=GA_MUTATION_RATE,
+                             mutationFunction=mutationFunction,
+                             parentSelectionFunction=parentSelectionFunction,
+                             problem=problem
+                             )
 
     solVec = algo.findSolution(GA_MAX_ITER)
     print('Solution = ' + ''.join([chr(i) for i in solVec]) + '\n')
