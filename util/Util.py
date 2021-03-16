@@ -2,7 +2,7 @@ import random
 
 
 def getValidIndexes(vecSize):
-    index1 = random.randint(0, vecSize)
+    index1 = random.randint(0, vecSize - 1)
     index2 = random.choice([i for i in range(vecSize) if i != index1])
 
     # make sure index1 < index2

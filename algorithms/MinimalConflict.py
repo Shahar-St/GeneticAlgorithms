@@ -13,13 +13,11 @@ class MinimalConflict(Algorithm):
 
         size = self._problem.getTargetSize()
         queensPositions = []
-        # self._board = np.full((size, size), False)
 
         availPos = [[i, j] for i, j in itertools.product(range(size), range(size))]
         for i in range(size):
             pos = random.choice(availPos)
             queensPositions.append(pos)
-            # self._board[pos[0]][pos[1]] = True
             availPos.remove(pos)
 
         self._queensPositions = queensPositions

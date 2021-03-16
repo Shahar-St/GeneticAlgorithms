@@ -35,3 +35,6 @@ class Problem(ABC):
 
         if problemName == 'NQueens':
             return problem(fitnessFunction, target)
+
+        if problemName == 'Knapsack':
+            return problem(fitnessFunction, target)

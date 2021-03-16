@@ -21,6 +21,9 @@ def getParamsDict(problemName):
     if problemName == 'NQueens':
         return N_QUEENS_DEF_PRAMS, N_QUEENS_ALLOWED_PARAMS
 
+    if problemName == 'Knapsack':
+        return KNAPSACK_DEF_PRAMS, KNAPSACK_ALLOWED_PARAMS
+
     print('Unknown problem!')
     exit(1)
 
@@ -28,16 +31,18 @@ def getParamsDict(problemName):
 def validateTarget(problemName, target):
     if problemName == 'NQueens':
         if not target.isdigit():
-        # if type(target) != type(int):
             print(f'Invalid input {target} for N-Queens')
             exit(1)
-
 
     elif problemName == 'StringMatching':
         if type(target) != str or target == '':
             print(f'Invalid input {target} for String Matching')
             exit(1)
 
+    elif problemName == 'Knapsack':
+        if not target.isdigit():
+            print(f'Invalid input {target} for Knapsack')
+            exit(1)
 
 def main():
     startTime = time.time()
