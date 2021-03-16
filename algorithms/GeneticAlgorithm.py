@@ -5,7 +5,6 @@ import numpy as np
 
 from algorithms.Algorithm import Algorithm
 from entities.GeneticEntity import GeneticEntity
-from entities.parentselection.RandomParentSelection import RandomParentSelection
 
 from util.Consts import ALLOWED_CHARS, BEST, CLOCK_RATE
 from util.Consts import BEST, GA_CONTINUATION_RATE, CLOCK_RATE
@@ -71,6 +70,7 @@ class GeneticAlgorithm(Algorithm):
 
         tempPopulation = []
         for i in range(eliteSize):
+            self._citizens[i].increaseAge()
             tempPopulation.append(self._citizens[i])
 
         for i in range(eliteSize, self._popSize):

@@ -5,7 +5,7 @@ from abc import abstractmethod
 class FitnessFunction:
 
     @abstractmethod
-    def calculate(self, targetVec, vector):
+    def calculate(self, problem, vector):
         raise NotImplementedError
 
     @staticmethod

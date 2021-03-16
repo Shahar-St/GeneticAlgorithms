@@ -6,15 +6,12 @@ import numpy as np
 
 class Problem(ABC):
 
-    def __init__(self, targetVal, fitnessFunction):
-        self._targetVal = targetVal
-        self._targetVec = self._setTargetVec()
+    def __init__(self, fitnessFunction, targetSize):
+        self._targetSize = targetSize
         self._fitnessFunction = fitnessFunction
 
-
-    @abstractmethod
-    def _setTargetVec(self):
-        raise NotImplementedError
+    def getTargetSize(self):
+        return self._targetSize
 
     @abstractmethod
     def translateVec(self, vec):
@@ -24,14 +21,16 @@ class Problem(ABC):
     def generateRandomVec(self):
         raise NotImplementedError
 
-    def getTargetVec(self):
-        return np.copy(self._targetVec)
-
     def calculateFitness(self, newVec):
-        return self._fitnessFunction(self._targetVec, newVec)
+        return self._fitnessFunction(self, newVec)
 
     @staticmethod
-    def factory(problemName, targetVal, fitnessFunction):
+    def factory(problemName, fitnessFunction, targetSize, targetVal=None):
         module = importlib.import_module('problems.' + problemName)
         problem = getattr(module, problemName)
-        return problem(targetVal, fitnessFunction)
+
+        if problemName == 'StringMatching':
+            return problem(fitnessFunction, targetSize, targetVal)
+
+        if problemName == 'NQueens':
+            return problem(fitnessFunction, targetSize)

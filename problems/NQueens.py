@@ -5,5 +5,8 @@ from problems.Problem import Problem
 
 class NQueens(Problem):
 
-    def _setTargetVec(self):
-        return np.copy(self._targetVal)
+    def translateVec(self, vec):
+        return vec
+
+    def generateRandomVec(self):
+        return np.random.permutation(self._targetSize)

@@ -14,8 +14,3 @@ class GeneticEntity(IndividualEntity):
     def getAge(self):
         return self._age
 
-    def setAge(self, age):
-        self._age = age
-
-    def getVec(self):
-        return self._vec

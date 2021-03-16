@@ -1,5 +1,7 @@
 import random
 
+import numpy as np
+
 from entities.mutations.Mutation import Mutation
 from util.Util import getValidIndexes
 
@@ -13,4 +15,4 @@ class ScrambleMutation(Mutation):
         elementsToShuffle = vec[index1:index2 + 1]
         random.shuffle(elementsToShuffle)
 
-        return vec[:index1] + elementsToShuffle + vec[index2 + 1:]
+        return np.concatenate((vec[:index1], elementsToShuffle, vec[index2 + 1:]))

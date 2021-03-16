@@ -4,9 +4,11 @@ from fitness.FitnessFunction import FitnessFunction
 class AsciiDistance(FitnessFunction):
 
 
-    def calculate(self, targetVec, vector):
+    def calculate(self, problem, vector):
 
         fitness = 0
+        targetVec = problem.getTargetVec()
+
         for newVal, targetElement in zip(vector, targetVec):
             fitness += abs(newVal - targetElement)
 

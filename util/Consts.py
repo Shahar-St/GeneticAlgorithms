@@ -2,12 +2,10 @@ import string
 
 import psutil
 
-GA_POP_SIZE = 600  # ga population size
+GA_POP_SIZE = 20  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
 
 CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
-
-GA_TARGET = 'Hello world!'
 
 UNWANTED_CHARS = ('\t', '\n', '\x0b', '\x0c', '\r')
 
@@ -19,18 +17,20 @@ BEST = 0
 
 '''------------------DEFAULT_PARSER-------------------'''
 
+DEFAULT_TARGET = '12345678'
 DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_CROSSOVER = 'UniformCrossover'
-DEFAULT_FITNESS = 'AsciiDistance'
-DEFAULT_PROBLEM = 'StringMatching'
+DEFAULT_CROSSOVER = 'OrderedCrossover'
+DEFAULT_FITNESS = 'DiagonalConflicts'
+DEFAULT_PROBLEM = 'NQueens'
 DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
-DEFAULT_MUTATION = 'FlipMutation'
+DEFAULT_MUTATION = 'ScrambleMutation'
 
 '''------------------ALLOWED_NAMED_PARSER-------------------'''
 
 ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
-ALLOWED_CROSS_NAMES = ('SinglePointCrossover', 'UniformCrossover', 'TwoPointCrossover')
-ALLOWED_FITNESS_NAMES = ('AsciiDistance', 'BullsAndCows')
+ALLOWED_CROSS_NAMES = ('SinglePointCrossover', 'UniformCrossover', 'TwoPointCrossover', 'OrderedCrossover',
+                       'PartiallyMatchedCrossover')
+ALLOWED_FITNESS_NAMES = ('AsciiDistance', 'BullsAndCows', 'DiagonalConflicts')
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
 ALLOWED_MUTATION_NAMES = ('FlipMutation', 'ScrambleMutation', 'ExchangeMutation')
 ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection')

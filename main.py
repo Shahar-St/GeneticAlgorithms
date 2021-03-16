@@ -21,6 +21,7 @@ def main():
     parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM, help='Problem to be solved')
     parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='Problem to be solved')
     parser.add_argument('-m', '--mutation', default=DEFAULT_MUTATION, help='Mutation method to be used')
+    parser.add_argument('-t', '--target', default=DEFAULT_TARGET, help='Target to find')
     args = parser.parse_args()
 
     if args.algo not in ALLOWED_ALGO_NAMES:
@@ -42,7 +43,7 @@ def main():
         return
 
     fitnessFunction = FitnessFunction.factory(args.fitness).calculate
-    problem = Problem.factory(args.problem, GA_TARGET, fitnessFunction)
+    problem = Problem.factory(args.problem, fitnessFunction, len(args.target), args.target)
 
     crossoverFunction = Crossover.factory(args.cross).makeNewChild
     parentSelectionFunction = ParentSelection.factory(args.parentSelection)
@@ -59,7 +60,7 @@ def main():
                              )
 
     solVec = algo.findSolution(GA_MAX_ITER)
-    print('Solution = ' + ''.join([chr(i) for i in solVec]) + '\n')
+    print(f'Solution = {problem.translateVec(solVec)}\n')
 
     endTime = time.time()
 

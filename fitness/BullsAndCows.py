@@ -4,9 +4,11 @@ from fitness.FitnessFunction import FitnessFunction
 class BullsAndCows(FitnessFunction):
 
 
-    def calculate(self, targetVec, vector):
+    def calculate(self, problem, vector):
 
         fitness = 0
+        targetVec = problem.getTargetVec()
+
         tempTargetVec = targetVec.tolist()
         tempVec = vector.tolist()
 
@@ -22,8 +24,7 @@ class BullsAndCows(FitnessFunction):
         while i < len(tempVec):
             if tempVec[i] in tempTargetVec:
                 fitness += 1
-                targetIndex = tempTargetVec.index(tempVec[i])
-                tempTargetVec.pop(targetIndex)
+                tempTargetVec.remove(tempVec[i])
 
             i += 1
 
