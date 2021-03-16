@@ -25,14 +25,14 @@ SOCIAL_WEIGHT = 2
 
 '''------------------DEFAULT_PARSER-------------------'''
 
-DEFAULT_PROBLEM = 'StringMatching'
-DEFAULT_ALGORITHM = 'GeneticAlgorithm'
+DEFAULT_PROBLEM = 'NQueens'
+DEFAULT_ALGORITHM = 'MinimalConflict'
 DEFAULT_PARENT_SELECTION_FUNC = 'StochasticTournament'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
-ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
+ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO', 'MinimalConflict')
 ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament',
                                        'StochasticTournament')
 

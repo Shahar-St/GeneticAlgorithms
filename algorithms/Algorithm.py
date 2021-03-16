@@ -20,16 +20,24 @@ class Algorithm(ABC):
         algo = getattr(module, algoName)
 
         if algoName == 'PSO':
-            return algo(problem=problem,
-                        popSize=popSize
-                        )
+            return algo(
+                problem=problem,
+                popSize=popSize
+            )
 
         if algoName == 'GeneticAlgorithm':
-            return algo(problem=problem,
-                        popSize=popSize,
-                        eliteRate=eliteRate,
-                        crossoverFunc=crossoverFunc,
-                        mutationRate=mutationRate,
-                        mutationFunction=mutationFunction,
-                        parentSelectionFunction=parentSelectionFunction
-                        )
+            return algo(
+                problem=problem,
+                popSize=popSize,
+                eliteRate=eliteRate,
+                crossoverFunc=crossoverFunc,
+                mutationRate=mutationRate,
+                mutationFunction=mutationFunction,
+                parentSelectionFunction=parentSelectionFunction
+            )
+
+        if algoName == 'MinimalConflict':
+            return algo(
+                problem=problem,
+                popSize=popSize
+            )
