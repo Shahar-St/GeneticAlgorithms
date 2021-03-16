@@ -14,7 +14,7 @@ class Algorithm(ABC):
 
     @staticmethod
     def factory(algoName, popSize, eliteRate, crossoverFunc, mutationRate,
-                mutationFunction, parentSelectionFunction, problem):
+                mutationFunction, parentSelectionFunction, continuationRuleFunction, problem):
         module = importlib.import_module('algorithms.' + algoName)
 
         algo = getattr(module, algoName)
@@ -33,6 +33,7 @@ class Algorithm(ABC):
                 crossoverFunc=crossoverFunc,
                 mutationRate=mutationRate,
                 mutationFunction=mutationFunction,
+                continuationRuleFunction=continuationRuleFunction,
                 parentSelectionFunction=parentSelectionFunction
             )
 

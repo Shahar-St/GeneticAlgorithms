@@ -5,6 +5,9 @@ import psutil
 GA_POP_SIZE = 300  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
 
+AGE_MIN_TO_BE_PARENT = 2
+AGE_DIE = 20
+
 CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
 
 UNWANTED_CHARS = ('\t', '\n', '\x0b', '\x0c', '\r')
@@ -28,6 +31,7 @@ SOCIAL_WEIGHT = 2
 DEFAULT_PROBLEM = 'NQueens'
 DEFAULT_ALGORITHM = 'MinimalConflict'
 DEFAULT_PARENT_SELECTION_FUNC = 'StochasticTournament'
+DEFAULT_CONTINUATION_RULE = 'AgingRule'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
@@ -35,6 +39,7 @@ ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
 ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO', 'MinimalConflict')
 ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament',
                                        'StochasticTournament')
+ALLOWED_CONTINUATION_RULE_NAMES = ('AgingRule', 'EliteRule')
 
 '''--------------String Matching Parameters------------------'''
 STRING_MATCHING_DEF_PRAMS = {

@@ -4,6 +4,7 @@ import argparse
 import traceback
 
 from algorithms.Algorithm import Algorithm
+from entities.continuationrule.ContinuationRule import ContinuationRule
 from entities.crossovers.Crossover import Crossover
 from entities.mutations.Mutation import Mutation
 from entities.parentselection.ParentSelection import ParentSelection
@@ -50,6 +51,7 @@ def main():
     parser.add_argument('-m', '--mutation', help='Mutation method to be used')
     parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='the algo will be process')
     parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='Problem to be solved')
+    parser.add_argument('-r', '--continuationRule', default=DEFAULT_CONTINUATION_RULE, help='Problem to be solved')
     parser.add_argument('-t', '--target', help='Target to find')
 
     args = parser.parse_args()
@@ -93,13 +95,19 @@ def main():
         print("invalid parent selection function!\n")
         return
 
+    if args.continuationRule not in ALLOWED_CONTINUATION_RULE_NAMES:
+        print("invalid continuation rule function!\n")
+        return
+
     fitnessFunction = FitnessFunction.factory(paramsDict['FITNESS']).calculate
     problem = Problem.factory(problemName=args.problem,
                               fitnessFunction=fitnessFunction,
                               target=paramsDict['TARGET'])
     crossoverFunction = Crossover.factory(paramsDict['CROSSOVER']).makeNewChild
 
-    parentSelectionFunction = ParentSelection.factory(args.parentSelection)
+    parentSelectionFunction = ParentSelection.factory(args.parentSelection).getCandidates
+    continuationRuleFunction = ContinuationRule.factory(args.continuationRule).getNextGenAndPotentialParents
+
     mutationFunction = Mutation.factory(paramsDict['MUTATION']).mutate
 
     algo = Algorithm.factory(algoName=args.algo,
@@ -109,6 +117,7 @@ def main():
                              mutationRate=GA_MUTATION_RATE,
                              mutationFunction=mutationFunction,
                              parentSelectionFunction=parentSelectionFunction,
+                             continuationRuleFunction=continuationRuleFunction,
                              problem=problem
                              )
 

@@ -12,7 +12,7 @@ from util.Consts import BEST, CLOCK_RATE
 class GeneticAlgorithm(Algorithm):
 
     def __init__(self, problem, popSize, eliteRate, crossoverFunc, mutationRate,
-                 mutationFunction, parentSelectionFunction):
+                 mutationFunction, parentSelectionFunction, continuationRuleFunction):
         super().__init__(problem, popSize)
 
         self._citizens = np.array(
@@ -26,6 +26,7 @@ class GeneticAlgorithm(Algorithm):
         self._mutationFunction = mutationFunction
         self._mutationRate = mutationRate
         self._parentSelectionFunction = parentSelectionFunction
+        self._continuationRuleFunction = continuationRuleFunction
         self._problem = problem
 
     def findSolution(self, maxIter):
@@ -65,17 +66,13 @@ class GeneticAlgorithm(Algorithm):
         return best.getVec()
 
     def _mate(self):
-        eliteSize = int(self._popSize * self._eliteRate)
 
-        tempPopulation = []
-        for i in range(eliteSize):
-            self._citizens[i].increaseAge()
-            tempPopulation.append(self._citizens[i])
+        tempPopulation, secList = self._continuationRuleFunction(self._citizens, self._eliteRate)
 
-        candidates = self._parentSelectionFunction.getCandidates(self._citizens)
+        candidates = self._parentSelectionFunction(secList)
         candidatesSize = len(candidates)
-        for i in range(eliteSize, self._popSize):
 
+        while len(tempPopulation) < self._popSize:
             parent1 = candidates[random.randrange(candidatesSize)]
             parent2 = candidates[random.randrange(candidatesSize)]
             newChild = self._crossoverFunc(parent1, parent2)
