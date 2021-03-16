@@ -2,7 +2,7 @@ import string
 
 import psutil
 
-GA_POP_SIZE = 250  # ga population size
+GA_POP_SIZE = 300  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
 
 CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
@@ -27,13 +27,14 @@ SOCIAL_WEIGHT = 2
 
 DEFAULT_PROBLEM = 'StringMatching'
 DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_PARENT_SELECTION_FUNC = 'SUS'
+DEFAULT_PARENT_SELECTION_FUNC = 'StochasticTournament'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
 ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
-ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament')
+ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament',
+                                       'StochasticTournament')
 
 '''--------------String Matching Parameters------------------'''
 STRING_MATCHING_DEF_PRAMS = {

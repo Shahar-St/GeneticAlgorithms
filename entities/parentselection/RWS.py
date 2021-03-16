@@ -28,9 +28,11 @@ class RWS(ParentSelection):
             r = random.random()
 
             i = 0
-            while r > cum_rateFitness[i]:
+            found = False
+            while i < len(cum_rateFitness) and not found:
+                if r < cum_rateFitness[i]:
+                    candidates.append(citizens[i])
+                    found = True
                 i += 1
-            candidates.append(citizens[i])
-
 
         return np.array(candidates)

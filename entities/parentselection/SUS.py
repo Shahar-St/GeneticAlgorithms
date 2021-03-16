@@ -23,10 +23,15 @@ class SUS(ParentSelection):
 
         r = random.random()
         for i in range(len(cum_rateFitness)):
+
             i = 0
-            while r > cum_rateFitness[i]:
+            found = False
+            while i < len(cum_rateFitness) and not found:
+                if r < cum_rateFitness[i]:
+                    candidates.append(citizens[i])
+                    found = True
                 i += 1
-            candidates.append(citizens[i])
+
             r += (1/len(citizens))
             if r >= 1:
                 r = r - 1
