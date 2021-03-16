@@ -1,6 +1,8 @@
 import time
 
 import argparse
+import traceback
+
 from algorithms.Algorithm import Algorithm
 from entities.crossovers.Crossover import Crossover
 from entities.mutations.Mutation import Mutation
@@ -71,4 +73,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception:
+        traceback.print_exc()
