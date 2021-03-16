@@ -32,10 +32,11 @@ class MinimalConflict(Algorithm):
             minAttacks = size + 1
 
             pickedQueenIndex = random.randrange(size)
-            positions = self._availablePositions(pickedQueenIndex)
+            availPositions = [[i, j] for i, j in itertools.product(range(size), range(size)) if
+                              [i, j] not in self._queensPositions]
             minConflictPosition = (-1, -1)
 
-            for pos in positions:
+            for pos in availPositions:
 
                 # move queen to pos
                 priorPosition = self._queensPositions[pickedQueenIndex]
@@ -56,6 +57,7 @@ class MinimalConflict(Algorithm):
         for pos in self._queensPositions:
             solution[pos[0]] = pos[1]
 
+        print(f'num of iter = {iterCounter}')
         return solution
 
     def _solutionFound(self):
@@ -80,10 +82,6 @@ class MinimalConflict(Algorithm):
 
         return True
 
-    def _availablePositions(self, pickedQueen):
-        pass
-
-
     def _specificQueenConflicts(self, pos):
 
         conflicts = 0
@@ -95,7 +93,8 @@ class MinimalConflict(Algorithm):
         # row conflicts
         num, count = np.unique(rows, return_counts=True)
         for i in range(len(num)):
-            conflicts += count[pos[0]] - 1
+            if num[i] == pos[0]:
+                conflicts += count[i] - 1
 
         # col conflicts
         num, count = np.unique(cols, return_counts=True)
