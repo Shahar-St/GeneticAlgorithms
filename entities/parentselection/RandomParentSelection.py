@@ -1,15 +1,18 @@
-from entities.parentselection.ParentSelection import ParentSelection
-from util.Consts import GA_CONTINUATION_RATE
+import numpy as np
 
-import random
+from entities.parentselection.ParentSelection import ParentSelection
+
+
 
 
 class RandomParentSelection(ParentSelection):
 
-    def getParents(self, candidates):
-        size = len(candidates)
+    def getCandidates(self, citizens):
 
-        parent1 = candidates[random.randrange(int(size * GA_CONTINUATION_RATE))]
-        parent2 = candidates[random.randrange(int(size * GA_CONTINUATION_RATE))]
+        sizeCitizens = len(citizens)
+        candidates = []
 
-        return parent1, parent2
+        for i in range(int(sizeCitizens / 2)):
+            candidates.append(citizens[i])
+
+        return np.array(candidates)

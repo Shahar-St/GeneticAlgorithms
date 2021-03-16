@@ -25,18 +25,17 @@ def getParamsDict(problemName):
 
 
 def validateTarget(problemName, target):
-
     if problemName == 'NQueens':
-        if type(target) != type(int):
+        if not target.isdigit():
+        # if type(target) != type(int):
             print(f'Invalid input {target} for N-Queens')
             exit(1)
 
 
     elif problemName == 'StringMatching':
-        if type(target) != type(string) or target == '':
-            print(f'Invalid input {target} for N-Queens')
+        if type(target) != str or target == '':
+            print(f'Invalid input {target} for String Matching')
             exit(1)
-
 
 
 def main():
@@ -83,11 +82,8 @@ def main():
             exit(1)
 
     if args.target:
-        if validateTarget(args.problem, args.target):
-            paramsDict['TARGET'] = args.target
-        else:
-            print("Input Error: This problem can't work with this target")
-            exit(1)
+        validateTarget(args.problem, args.target)
+        paramsDict['TARGET'] = args.target
 
     if args.algo not in ALLOWED_ALGO_NAMES:
         print("invalid algo!\n")

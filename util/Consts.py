@@ -18,7 +18,6 @@ BEST = 0
 '''------------------GA-------------------'''
 GA_ELITE_RATE = 0.1  # elitism rate
 GA_MUTATION_RATE = 0.25  # mutation rate
-GA_CONTINUATION_RATE = 0.5
 
 '''------------------PSO------------------'''
 COGNITIVE_WEIGHT = 2
@@ -28,20 +27,19 @@ SOCIAL_WEIGHT = 2
 
 DEFAULT_PROBLEM = 'StringMatching'
 DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
+DEFAULT_PARENT_SELECTION_FUNC = 'SUS'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
-ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
-ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection')
+ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
+ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament')
 
 '''--------------String Matching Parameters------------------'''
 STRING_MATCHING_DEF_PRAMS = {
     'TARGET': 'Hello World!',
     'CROSSOVER': 'UniformCrossover',
-    'FITNESS': 'AsciiDistance',
-    'PARENT_SELECTION_FUNC': 'RandomParentSelection',
+    'FITNESS': 'BullsAndCows',
     'MUTATION': 'FlipMutation'
 }
 
@@ -56,7 +54,6 @@ N_QUEENS_DEF_PRAMS = {
     'TARGET': 8,
     'CROSSOVER': 'PartiallyMatchedCrossover',
     'FITNESS': 'DiagonalConflicts',
-    'PARENT_SELECTION_FUNC': 'RandomParentSelection',
     'MUTATION': 'ScrambleMutation'
 }
 

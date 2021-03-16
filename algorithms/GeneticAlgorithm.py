@@ -6,8 +6,7 @@ import numpy as np
 from algorithms.Algorithm import Algorithm
 from entities.GeneticEntity import GeneticEntity
 
-from util.Consts import ALLOWED_CHARS, BEST, CLOCK_RATE
-from util.Consts import BEST, GA_CONTINUATION_RATE, CLOCK_RATE
+from util.Consts import BEST, CLOCK_RATE
 
 
 class GeneticAlgorithm(Algorithm):
@@ -73,10 +72,12 @@ class GeneticAlgorithm(Algorithm):
             self._citizens[i].increaseAge()
             tempPopulation.append(self._citizens[i])
 
+        candidates = self._parentSelectionFunction.getCandidates(self._citizens)
+        candidatesSize = len(candidates)
         for i in range(eliteSize, self._popSize):
 
-            parent1, parent2 = self._parentSelectionFunction.getParents(self._citizens)
-
+            parent1 = candidates[random.randrange(candidatesSize)]
+            parent2 = candidates[random.randrange(candidatesSize)]
             newChild = self._crossoverFunc(parent1, parent2)
 
             if random.random() < self._mutationRate:

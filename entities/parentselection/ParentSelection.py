@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 class ParentSelection(ABC):
 
     @abstractmethod
-    def getParents(self, candidates):
+    def getCandidates(self, citizens):
         raise NotImplementedError
 
     @staticmethod
