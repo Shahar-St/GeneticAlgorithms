@@ -2,7 +2,7 @@ import string
 
 import psutil
 
-GA_POP_SIZE = 20  # ga population size
+GA_POP_SIZE = 250  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
 
 CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
@@ -15,26 +15,6 @@ UPPER_BOUND = 126
 
 BEST = 0
 
-'''------------------DEFAULT_PARSER-------------------'''
-
-DEFAULT_TARGET = '12345678'
-DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_CROSSOVER = 'OrderedCrossover'
-DEFAULT_FITNESS = 'DiagonalConflicts'
-DEFAULT_PROBLEM = 'NQueens'
-DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
-DEFAULT_MUTATION = 'ScrambleMutation'
-
-'''------------------ALLOWED_NAMED_PARSER-------------------'''
-
-ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
-ALLOWED_CROSS_NAMES = ('SinglePointCrossover', 'UniformCrossover', 'TwoPointCrossover', 'OrderedCrossover',
-                       'PartiallyMatchedCrossover')
-ALLOWED_FITNESS_NAMES = ('AsciiDistance', 'BullsAndCows', 'DiagonalConflicts')
-ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
-ALLOWED_MUTATION_NAMES = ('FlipMutation', 'ScrambleMutation', 'ExchangeMutation')
-ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection')
-
 '''------------------GA-------------------'''
 GA_ELITE_RATE = 0.1  # elitism rate
 GA_MUTATION_RATE = 0.25  # mutation rate
@@ -43,3 +23,45 @@ GA_CONTINUATION_RATE = 0.5
 '''------------------PSO------------------'''
 COGNITIVE_WEIGHT = 2
 SOCIAL_WEIGHT = 2
+
+'''------------------DEFAULT_PARSER-------------------'''
+
+DEFAULT_PROBLEM = 'StringMatching'
+DEFAULT_ALGORITHM = 'GeneticAlgorithm'
+DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
+
+'''------------------ALLOWED_PARSER_NAMES-------------------'''
+
+ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO')
+ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens')
+ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection')
+
+'''--------------String Matching Parameters------------------'''
+STRING_MATCHING_DEF_PRAMS = {
+    'TARGET': 'Hello World!',
+    'CROSSOVER': 'UniformCrossover',
+    'FITNESS': 'AsciiDistance',
+    'PARENT_SELECTION_FUNC': 'RandomParentSelection',
+    'MUTATION': 'FlipMutation'
+}
+
+STRING_MATCHING_ALLOWED_PARAMS = {
+    'CROSSOVER': ('SinglePointCrossover', 'TwoPointCrossover', 'UniformCrossover'),
+    'FITNESS': ('AsciiDistance', 'BullsAndCows'),
+    'MUTATION': ('FlipMutation')
+}
+
+'''--------------N Queens Parameters------------------'''
+N_QUEENS_DEF_PRAMS = {
+    'TARGET': 8,
+    'CROSSOVER': 'PartiallyMatchedCrossover',
+    'FITNESS': 'DiagonalConflicts',
+    'PARENT_SELECTION_FUNC': 'RandomParentSelection',
+    'MUTATION': 'ScrambleMutation'
+}
+
+N_QUEENS_ALLOWED_PARAMS = {
+    'CROSSOVER': ('PartiallyMatchedCrossover', 'OrderedCrossover'),
+    'FITNESS': ('DiagonalConflicts'),
+    'MUTATION': ('ScrambleMutation', 'ExchangeMutation')
+}

@@ -6,12 +6,13 @@ import numpy as np
 
 class Problem(ABC):
 
-    def __init__(self, fitnessFunction, targetSize):
-        self._targetSize = targetSize
+    def __init__(self, fitnessFunction, target):
+        self._target = target
         self._fitnessFunction = fitnessFunction
 
+    @abstractmethod
     def getTargetSize(self):
-        return self._targetSize
+        raise NotImplementedError
 
     @abstractmethod
     def translateVec(self, vec):
@@ -25,12 +26,12 @@ class Problem(ABC):
         return self._fitnessFunction(self, newVec)
 
     @staticmethod
-    def factory(problemName, fitnessFunction, targetSize, targetVal=None):
+    def factory(problemName, fitnessFunction, target):
         module = importlib.import_module('problems.' + problemName)
         problem = getattr(module, problemName)
 
         if problemName == 'StringMatching':
-            return problem(fitnessFunction, targetSize, targetVal)
+            return problem(fitnessFunction, target)
 
         if problemName == 'NQueens':
-            return problem(fitnessFunction, targetSize)
+            return problem(fitnessFunction, target)

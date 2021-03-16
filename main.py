@@ -12,44 +12,99 @@ from problems.Problem import Problem
 from util.Consts import *
 
 
+# returns def and allowed
+def getParamsDict(problemName):
+    if problemName == 'StringMatching':
+        return STRING_MATCHING_DEF_PRAMS, STRING_MATCHING_ALLOWED_PARAMS
+
+    if problemName == 'NQueens':
+        return N_QUEENS_DEF_PRAMS, N_QUEENS_ALLOWED_PARAMS
+
+    print('Unknown problem!')
+    exit(1)
+
+
+def validateTarget(problemName, target):
+
+    if problemName == 'NQueens':
+        if type(target) != type(int):
+            print(f'Invalid input {target} for N-Queens')
+            exit(1)
+
+
+    elif problemName == 'StringMatching':
+        if type(target) != type(string) or target == '':
+            print(f'Invalid input {target} for N-Queens')
+            exit(1)
+
+
+
 def main():
     startTime = time.time()
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='the algo will be process')
-    parser.add_argument('-c', '--cross', default=DEFAULT_CROSSOVER, help='the cross will be process')
-    parser.add_argument('-f', '--fitness', default=DEFAULT_FITNESS, help='the fitness will be process')
     parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM, help='Problem to be solved')
+
+    parser.add_argument('-c', '--cross', help='the cross will be process')
+    parser.add_argument('-f', '--fitness', help='the fitness will be process')
+    parser.add_argument('-m', '--mutation', help='Mutation method to be used')
+    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='the algo will be process')
     parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='Problem to be solved')
-    parser.add_argument('-m', '--mutation', default=DEFAULT_MUTATION, help='Mutation method to be used')
-    parser.add_argument('-t', '--target', default=DEFAULT_TARGET, help='Target to find')
+    parser.add_argument('-t', '--target', help='Target to find')
+
     args = parser.parse_args()
 
-    if args.algo not in ALLOWED_ALGO_NAMES:
-        print("invalid algo! \n")
-        return
-    if args.cross not in ALLOWED_CROSS_NAMES:
-        print("invalid cross function! \n")
-        return
-    if args.fitness not in ALLOWED_FITNESS_NAMES:
-        print("invalid fitness function! \n")
-        return
     if args.problem not in ALLOWED_PROBLEM_NAMES:
-        print("invalid problem! \n")
+        print("invalid problem!\n")
+        exit(1)
+
+    paramsDict, allowedDict = getParamsDict(args.problem)
+
+    if args.fitness:
+        if args.fitness in allowedDict['FITNESS']:
+            paramsDict['FITNESS'] = args.fitness
+        else:
+            print("Input Error: This problem can't work with this fitness function")
+            exit(1)
+
+    if args.cross:
+        if args.cross in allowedDict['CROSS']:
+            paramsDict['CROSSOVER'] = args.cross
+        else:
+            print("Input Error: This problem can't work with this crossover")
+            exit(1)
+
+    if args.mutation:
+        if args.mutation in allowedDict['MUTATION']:
+            paramsDict['MUTATION'] = args.mutation
+        else:
+            print("Input Error: This problem can't work with this mutation")
+            exit(1)
+
+    if args.target:
+        if validateTarget(args.problem, args.target):
+            paramsDict['TARGET'] = args.target
+        else:
+            print("Input Error: This problem can't work with this target")
+            exit(1)
+
+    if args.algo not in ALLOWED_ALGO_NAMES:
+        print("invalid algo!\n")
         return
+
     if args.parentSelection not in ALLOWED_PARENT_SELECTION_FUNC_NAMES:
-        print("invalid parent selection function! \n")
-        return
-    if args.mutation not in ALLOWED_MUTATION_NAMES:
+        print("invalid parent selection function!\n")
         return
 
-    fitnessFunction = FitnessFunction.factory(args.fitness).calculate
-    problem = Problem.factory(args.problem, fitnessFunction, len(args.target), args.target)
+    fitnessFunction = FitnessFunction.factory(paramsDict['FITNESS']).calculate
+    problem = Problem.factory(problemName=args.problem,
+                              fitnessFunction=fitnessFunction,
+                              target=paramsDict['TARGET'])
+    crossoverFunction = Crossover.factory(paramsDict['CROSSOVER']).makeNewChild
 
-    crossoverFunction = Crossover.factory(args.cross).makeNewChild
     parentSelectionFunction = ParentSelection.factory(args.parentSelection)
-    mutationFunction = Mutation.factory(args.mutation).mutate
+    mutationFunction = Mutation.factory(paramsDict['MUTATION']).mutate
 
     algo = Algorithm.factory(algoName=args.algo,
                              popSize=GA_POP_SIZE,

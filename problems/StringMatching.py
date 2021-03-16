@@ -8,10 +8,12 @@ from util.Consts import ALLOWED_CHARS
 
 class StringMatching(Problem):
 
-    def __init__(self, fitnessFunction, targetSize, targetVal):
-        super().__init__(fitnessFunction, targetSize)
-        self._targetVal = targetVal
-        self._targetVec = np.array([ord(c) for c in self._targetVal])
+    def getTargetSize(self):
+        return len(self._target)
+
+    def __init__(self, fitnessFunction, target):
+        super().__init__(fitnessFunction, target)
+        self._targetVec = np.array([ord(c) for c in self._target])
 
     def generateRandomVec(self):
         randomString = ''.join(random.choice(ALLOWED_CHARS) for _ in range(len(self._targetVec)))
