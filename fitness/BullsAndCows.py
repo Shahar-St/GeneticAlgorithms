@@ -12,6 +12,7 @@ class BullsAndCows(FitnessFunction):
         tempTargetVec = targetVec.tolist()
         tempVec = vector.tolist()
 
+        # count exact places
         i = 0
         while i < len(tempTargetVec):
             if tempVec[i] == tempTargetVec[i]:
@@ -20,6 +21,7 @@ class BullsAndCows(FitnessFunction):
             else:
                 i += 1
 
+        # count 'exist' places
         i = 0
         while i < len(tempVec):
             if tempVec[i] in tempTargetVec:
@@ -28,6 +30,7 @@ class BullsAndCows(FitnessFunction):
 
             i += 1
 
+        # what left in tempTargetVec doesnt exist in the target vector
         fitness += len(tempTargetVec) * 2
 
         return fitness

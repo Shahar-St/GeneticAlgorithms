@@ -30,7 +30,8 @@ class GeneticAlgorithm(Algorithm):
         self._problem = problem
 
     def findSolution(self, maxIter):
-        startTime = time.time()
+
+        totalRunTime = time.time()
         self.updateFitness()
 
         best = self._citizens[BEST]
@@ -38,14 +39,6 @@ class GeneticAlgorithm(Algorithm):
         # iterative improvement
         iterCounter = 0
         while best.getFitness() != 0 and iterCounter < maxIter:
-
-            print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
-                  f' STD: {self._standardDeviation:.2f}')
-
-            endTime = time.time()
-            elapsedTime = endTime - startTime
-            print("This generation took", elapsedTime * CLOCK_RATE, "clock ticks")
-
             startTime = time.time()
 
             self._mate()
@@ -54,14 +47,14 @@ class GeneticAlgorithm(Algorithm):
             best = self._citizens[BEST]
             iterCounter += 1
 
-        print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
-              f' STD: {self._standardDeviation:.2f}')
+            elapsedTime = time.time() - startTime
+            print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
+                  f' STD: {self._standardDeviation:.2f}. Time in secs: {elapsedTime}. '
+                  f'CPU clicks: {elapsedTime * CLOCK_RATE}')
 
-        endTime = time.time()
-        elapsedTime = endTime - startTime
-        print(f'This generation took {elapsedTime * CLOCK_RATE} clock ticks \n')
-
-        print(f'Number of iterations: {iterCounter}\n')
+        totalElapsedTime = time.time() - totalRunTime
+        print(f'Total: Iterations: {iterCounter}. Elapsed Time in secs: {totalElapsedTime}.'
+              f' CPU clicks: {totalElapsedTime * CLOCK_RATE}\n')
 
         return best.getVec()
 

@@ -8,21 +8,20 @@ from util.Consts import AGE_DIE, AGE_MIN_TO_BE_PARENT
 
 class AgingRule(ContinuationRule, ABC):
 
-    def getNextGenAndPotentialParents(self, citizens, eliteRate):
+    def getNextGenAndPotentialParents(self, citizens, _):
 
-        firstList = []
+        tempCitizens = []
         secList = []
 
         for i in range(len(citizens)):
             citizens[i].increaseAge()
-            if (citizens[i].getAge()) >= AGE_DIE:
-                citizens.pop(i)
+            if (citizens[i].getAge()) < AGE_DIE:
+                tempCitizens.append(citizens[i])
 
-        firstList = citizens
 
         for i in range(len(citizens)):
             if (citizens[i].getAge()) >= AGE_MIN_TO_BE_PARENT:
                 secList.append(citizens[i])
 
-        return firstList, np.array(secList)
+        return tempCitizens, np.array(secList)
 

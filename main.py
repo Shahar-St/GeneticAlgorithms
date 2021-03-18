@@ -12,7 +12,6 @@ from fitness.FitnessFunction import FitnessFunction
 from problems.Problem import Problem
 from util.Consts import *
 
-
 # returns def and allowed
 def getParamsDict(problemName):
     if problemName == 'StringMatching':
@@ -71,29 +70,29 @@ def main():
     paramsDict, allowedDict = getParamsDict(args.problem)
 
     if args.fitness:
-        if args.fitness in allowedDict['FITNESS']:
-            paramsDict['FITNESS'] = args.fitness
+        if args.fitness in allowedDict[FITNESS]:
+            paramsDict[FITNESS] = args.fitness
         else:
             print("Input Error: This problem can't work with this fitness function")
             exit(1)
 
     if args.cross:
-        if args.cross in allowedDict['CROSS']:
-            paramsDict['CROSSOVER'] = args.cross
+        if args.cross in allowedDict[CROSSOVER]:
+            paramsDict[CROSSOVER] = args.cross
         else:
             print("Input Error: This problem can't work with this crossover")
             exit(1)
 
     if args.mutation:
-        if args.mutation in allowedDict['MUTATION']:
-            paramsDict['MUTATION'] = args.mutation
+        if args.mutation in allowedDict[MUTATION]:
+            paramsDict[MUTATION] = args.mutation
         else:
             print("Input Error: This problem can't work with this mutation")
             exit(1)
 
     if args.target:
         validateTarget(args.problem, args.target)
-        paramsDict['TARGET'] = args.target
+        paramsDict[TARGET] = args.target
 
     if args.algo not in ALLOWED_ALGO_NAMES:
         print("invalid algo!\n")
@@ -111,18 +110,21 @@ def main():
         print('Invalid population size, must be an int')
         return
 
-    fitnessFunction = FitnessFunction.factory(paramsDict['FITNESS']).calculate
+    algoName = args.algo
+    fitnessFuncName = paramsDict[FITNESS]
+
+    fitnessFunction = FitnessFunction.factory(fitnessFuncName).calculate
     problem = Problem.factory(problemName=args.problem,
                               fitnessFunction=fitnessFunction,
-                              target=paramsDict['TARGET'])
-    crossoverFunction = Crossover.factory(paramsDict['CROSSOVER']).makeNewChild
+                              target=paramsDict[TARGET])
+    crossoverFunction = Crossover.factory(paramsDict[CROSSOVER]).makeNewChild
 
     parentSelectionFunction = ParentSelection.factory(args.parentSelection).getCandidates
     continuationRuleFunction = ContinuationRule.factory(args.continuationRule).getNextGenAndPotentialParents
 
-    mutationFunction = Mutation.factory(paramsDict['MUTATION']).mutate
+    mutationFunction = Mutation.factory(paramsDict[MUTATION]).mutate
 
-    algo = Algorithm.factory(algoName=args.algo,
+    algo = Algorithm.factory(algoName=algoName,
                              popSize=int(args.popsize),
                              eliteRate=GA_ELITE_RATE,
                              crossoverFunc=crossoverFunction,
@@ -133,14 +135,24 @@ def main():
                              problem=problem
                              )
 
+    print(
+        '\nRun parameters:\n'
+        f'Problem: {algoName}\n'
+        f'Algo: {args.algo}\n'
+        f'Pop size: {args.popsize}\n'
+        f'Crossover: {paramsDict[CROSSOVER]}\n'
+        f'Mutation: {paramsDict[MUTATION]}'
+    )
+    if algoName == 'GeneticAlgorithm':
+        print(f'Fitness: {fitnessFuncName}\n')
+
     solVec = algo.findSolution(GA_MAX_ITER)
+
     print(f'Solution = {problem.translateVec(solVec)}\n')
 
     endTime = time.time()
-
     elapsedTime = endTime - startTime
-
-    print(f'Elapsed time in seconds: {elapsedTime}')
+    print(f'Total elapsed time in seconds: {elapsedTime}')
     print(f'This process took {elapsedTime * CLOCK_RATE} clock ticks')
 
 
@@ -150,4 +162,5 @@ if __name__ == '__main__':
     except Exception:
         traceback.print_exc()
     finally:
-        input('>>>Press any key to continue<<<')
+        pass
+        # input('-----Press any key to continue-----')

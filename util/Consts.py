@@ -28,10 +28,10 @@ SOCIAL_WEIGHT = 2
 
 '''------------------DEFAULT_PARSER-------------------'''
 
-DEFAULT_PROBLEM = 'StringMatching'
+DEFAULT_PROBLEM = 'Knapsack'
 DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
-DEFAULT_CONTINUATION_RULE = 'EliteRule'
+DEFAULT_PARENT_SELECTION_FUNC = 'StochasticTournament'
+DEFAULT_CONTINUATION_RULE = 'AgingRule'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
@@ -45,7 +45,7 @@ ALLOWED_CONTINUATION_RULE_NAMES = ('AgingRule', 'EliteRule')
 STRING_MATCHING_DEF_PRAMS = {
     'TARGET': 'Hello World!',
     'CROSSOVER': 'UniformCrossover',
-    'FITNESS': 'AsciiDistance',
+    'FITNESS': 'BullsAndCows',
     'MUTATION': 'FlipMutation'
 }
 
@@ -85,3 +85,9 @@ KNAPSACK_ALLOWED_PARAMS = {
     'FITNESS': ('KnapsackFitness'),
     'MUTATION': ('KnapsackFlipMutation')
 }
+
+CROSSOVER = 'CROSSOVER'
+MUTATION = 'MUTATION'
+TARGET = 'TARGET'
+FITNESS = 'FITNESS'
+
