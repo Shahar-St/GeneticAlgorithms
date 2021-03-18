@@ -44,6 +44,7 @@ def validateTarget(problemName, target):
             print(f'Invalid input {target} for Knapsack')
             exit(1)
 
+
 def main():
     startTime = time.time()
 
@@ -51,12 +52,14 @@ def main():
 
     parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM, help='Problem to be solved')
 
-    parser.add_argument('-c', '--cross', help='the cross will be process')
-    parser.add_argument('-f', '--fitness', help='the fitness will be process')
-    parser.add_argument('-m', '--mutation', help='Mutation method to be used')
-    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='the algo will be process')
-    parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='Problem to be solved')
-    parser.add_argument('-r', '--continuationRule', default=DEFAULT_CONTINUATION_RULE, help='Problem to be solved')
+    parser.add_argument('-ps', '--popsize', default=GA_POP_SIZE)
+    parser.add_argument('-c', '--cross')
+    parser.add_argument('-f', '--fitness')
+    parser.add_argument('-m', '--mutation', help='Mutation function to use')
+    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='The algorithms to use')
+    parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='How to select parents')
+    parser.add_argument('-r', '--continuationRule', default=DEFAULT_CONTINUATION_RULE,
+                        help='How gene move to the next generation (Elite vs Aging)')
     parser.add_argument('-t', '--target', help='Target to find')
 
     args = parser.parse_args()
@@ -104,6 +107,10 @@ def main():
         print("invalid continuation rule function!\n")
         return
 
+    if type(args.popsize) != int and not args.popsize.isdigit():
+        print('Invalid population size, must be an int')
+        return
+
     fitnessFunction = FitnessFunction.factory(paramsDict['FITNESS']).calculate
     problem = Problem.factory(problemName=args.problem,
                               fitnessFunction=fitnessFunction,
@@ -116,7 +123,7 @@ def main():
     mutationFunction = Mutation.factory(paramsDict['MUTATION']).mutate
 
     algo = Algorithm.factory(algoName=args.algo,
-                             popSize=GA_POP_SIZE,
+                             popSize=int(args.popsize),
                              eliteRate=GA_ELITE_RATE,
                              crossoverFunc=crossoverFunction,
                              mutationRate=GA_MUTATION_RATE,
@@ -142,3 +149,5 @@ if __name__ == '__main__':
         main()
     except Exception:
         traceback.print_exc()
+    finally:
+        input('>>>Press any key to continue<<<')
