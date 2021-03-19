@@ -29,14 +29,14 @@ SOCIAL_WEIGHT = 2
 
 DEFAULT_PROBLEM = 'StringMatching'
 DEFAULT_ALGORITHM = 'PSO'
-DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
+DEFAULT_PARENT_SELECTION_FUNC = 'NaiveParentSelection'
 DEFAULT_CONTINUATION_RULE = 'EliteRule'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
 ALLOWED_PROBLEM_NAMES = ('StringMatching', 'NQueens', 'Knapsack')
 ALLOWED_ALGO_NAMES = ('GeneticAlgorithm', 'PSO', 'MinimalConflict')
-ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('RandomParentSelection', 'RWS', 'SUS', 'DeterministicTournament',
+ALLOWED_PARENT_SELECTION_FUNC_NAMES = ('NaiveParentSelection', 'RWS', 'SUS', 'DeterministicTournament',
                                        'StochasticTournament')
 ALLOWED_CONTINUATION_RULE_NAMES = ('AgingRule', 'EliteRule')
 
@@ -89,4 +89,3 @@ CROSSOVER = 'CROSSOVER'
 MUTATION = 'MUTATION'
 TARGET = 'TARGET'
 FITNESS = 'FITNESS'
-

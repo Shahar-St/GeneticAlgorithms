@@ -16,4 +16,3 @@ class GeneticEntity(IndividualEntity):
 
     def getAge(self):
         return self._age
-

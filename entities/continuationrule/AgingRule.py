@@ -18,10 +18,8 @@ class AgingRule(ContinuationRule, ABC):
             if (citizens[i].getAge()) < AGE_DIE:
                 genesUnderAgeLimit.append(citizens[i])
 
-
         for i in range(len(citizens)):
             if (citizens[i].getAge()) >= AGE_MIN_TO_BE_PARENT:
                 genesInParentingRange.append(citizens[i])
 
         return genesUnderAgeLimit, np.array(genesInParentingRange)
-

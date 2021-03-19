@@ -3,7 +3,7 @@ import numpy as np
 from entities.parentselection.ParentSelection import ParentSelection
 
 
-class RandomParentSelection(ParentSelection):
+class NaiveParentSelection(ParentSelection):
 
     def getCandidates(self, citizens):
         sizeCitizens = len(citizens)

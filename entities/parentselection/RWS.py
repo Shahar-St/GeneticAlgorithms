@@ -13,12 +13,12 @@ class RWS(ParentSelection):
 
         # calculate sum of fitness of all genes.
         for i in range(len(citizens)):
-            fitnessSum += math.sqrt(citizens[i].getFitness())                       # scaling with sqrt
+            fitnessSum += math.sqrt(citizens[i].getFitness())  # scaling with sqrt
 
         # calculate a proportional fitness for each gene.
         fitnessRate = []
         for i in range(len(citizens)):
-            fitnessRate.append(math.sqrt(citizens[i].getFitness()) / fitnessSum)    # scaling with sqrt
+            fitnessRate.append(math.sqrt(citizens[i].getFitness()) / fitnessSum)  # scaling with sqrt
 
         # at index i we sum up the fitnesses until index i.
         # flip the list - the lower the fitness, the better the solution.

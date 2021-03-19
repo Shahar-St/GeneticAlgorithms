@@ -21,7 +21,6 @@ class PartiallyMatchedCrossover(Crossover):
 
         # repeat the process random times
         while len(indexes) > 1 and 1 / (i + 1) < random.random():
-
             # get random index (without reps)
             index = random.choice(indexes)
             indexes.pop(index)

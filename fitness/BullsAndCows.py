@@ -3,7 +3,6 @@ from fitness.FitnessFunction import FitnessFunction
 
 class BullsAndCows(FitnessFunction):
 
-
     def calculate(self, problem, vector):
 
         fitness = 0

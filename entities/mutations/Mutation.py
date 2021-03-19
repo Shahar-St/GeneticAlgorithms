@@ -1,6 +1,7 @@
 import importlib
 from abc import ABC, abstractmethod
 
+
 # An abstract class that implements and declares common functionality to all mutation functions
 class Mutation(ABC):
 

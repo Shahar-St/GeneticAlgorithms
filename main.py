@@ -12,6 +12,7 @@ from fitness.FitnessFunction import FitnessFunction
 from problems.Problem import Problem
 from util.Consts import *
 
+
 # returns default and allowed dicts
 def getParamsDict(problemName):
     if problemName == 'StringMatching':
@@ -163,6 +164,3 @@ if __name__ == '__main__':
         main()
     except Exception:
         traceback.print_exc()
-    finally:
-        pass
-        # input('-----Press any key to continue-----')

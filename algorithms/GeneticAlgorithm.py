@@ -8,6 +8,7 @@ from entities.GeneticEntity import GeneticEntity
 
 from util.Consts import BEST, CLOCK_RATE
 
+
 # implements the genetic algorithm
 class GeneticAlgorithm(Algorithm):
 
@@ -28,7 +29,6 @@ class GeneticAlgorithm(Algorithm):
         self._parentSelectionFunction = parentSelectionFunction
         self._continuationRuleFunction = continuationRuleFunction
         self._problem = problem
-
 
     def findSolution(self, maxIter):
 

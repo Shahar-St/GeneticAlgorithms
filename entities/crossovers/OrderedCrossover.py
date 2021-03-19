@@ -25,5 +25,3 @@ class OrderedCrossover(Crossover):
                 parent2List.pop(0)
 
         return GeneticEntity(np.array(newChildVec))
-
-
