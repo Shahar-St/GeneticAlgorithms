@@ -2,8 +2,8 @@ import string
 
 import psutil
 
-GA_POP_SIZE = 30  # ga population size
-GA_MAX_ITER = 1000  # maximum iterations
+GA_POP_SIZE = 300  # ga population size
+GA_MAX_ITER = 300  # maximum iterations
 
 AGE_MIN_TO_BE_PARENT = 2
 AGE_DIE = 20
@@ -28,7 +28,7 @@ SOCIAL_WEIGHT = 2
 '''------------------DEFAULT_PARSER-------------------'''
 
 DEFAULT_PROBLEM = 'StringMatching'
-DEFAULT_ALGORITHM = 'PSO'
+DEFAULT_ALGORITHM = 'GeneticAlgorithm'
 DEFAULT_PARENT_SELECTION_FUNC = 'NaiveParentSelection'
 DEFAULT_CONTINUATION_RULE = 'EliteRule'
 

@@ -113,6 +113,8 @@ def main():
 
     algoName = args.algo
     fitnessFuncName = paramsDict[FITNESS]
+    parentSelectionName = args.parentSelection
+    continuationRuleName = args.continuationRule
 
     # init objects based on input
     fitnessFunction = FitnessFunction.factory(fitnessFuncName).calculate
@@ -120,8 +122,8 @@ def main():
                               fitnessFunction=fitnessFunction,
                               target=paramsDict[TARGET])
     crossoverFunction = Crossover.factory(paramsDict[CROSSOVER]).makeNewChild
-    parentSelectionFunction = ParentSelection.factory(args.parentSelection).getCandidates
-    continuationRuleFunction = ContinuationRule.factory(args.continuationRule).getNextGenAndPotentialParents
+    parentSelectionFunction = ParentSelection.factory(parentSelectionName).getCandidates
+    continuationRuleFunction = ContinuationRule.factory(continuationRuleName).getNextGenAndPotentialParents
     mutationFunction = Mutation.factory(paramsDict[MUTATION]).mutate
 
     # init algo
@@ -146,7 +148,9 @@ def main():
         f'Mutation: {paramsDict[MUTATION]}'
     )
     if algoName == 'GeneticAlgorithm':
-        print(f'Fitness: {fitnessFuncName}\n')
+        print(f'Fitness: {fitnessFuncName}\n'
+              f'Parent Selection: {parentSelectionName}\n'
+              f'ContinuationRule: {continuationRuleName}')
 
     # find a solution and print it
     solVec = algo.findSolution(GA_MAX_ITER)

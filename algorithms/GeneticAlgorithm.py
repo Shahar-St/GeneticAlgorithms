@@ -51,9 +51,9 @@ class GeneticAlgorithm(Algorithm):
             iterCounter += 1
 
             elapsedTime = time.time() - startTime
-            print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
-                  f' STD: {self._standardDeviation:.2f}. Time in secs: {elapsedTime}. '
-                  f'CPU clicks: {elapsedTime * CLOCK_RATE}')
+            # print(f'Best: {self._problem.translateVec(best.getVec())} ({best.getFitness()}). Mean: {self._mean:.2f},'
+            #       f' STD: {self._standardDeviation:.2f}. Time in secs: {elapsedTime}. '
+            #       f'CPU clicks: {elapsedTime * CLOCK_RATE}')
 
         totalElapsedTime = time.time() - totalRunTime
         print(f'Total: Iterations: {iterCounter}. Elapsed Time in secs: {totalElapsedTime}.'
