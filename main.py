@@ -115,12 +115,13 @@ def main():
     fitnessFuncName = paramsDict[FITNESS]
     parentSelectionName = args.parentSelection
     continuationRuleName = args.continuationRule
+    target = paramsDict[TARGET]
 
     # init objects based on input
     fitnessFunction = FitnessFunction.factory(fitnessFuncName).calculate
     problem = Problem.factory(problemName=args.problem,
                               fitnessFunction=fitnessFunction,
-                              target=paramsDict[TARGET])
+                              target=target)
     crossoverFunction = Crossover.factory(paramsDict[CROSSOVER]).makeNewChild
     parentSelectionFunction = ParentSelection.factory(parentSelectionName).getCandidates
     continuationRuleFunction = ContinuationRule.factory(continuationRuleName).getNextGenAndPotentialParents
@@ -138,19 +139,23 @@ def main():
                              problem=problem
                              )
 
-    # declare on the run parameters
+    # declare the run parameters
     print(
         '\nRun parameters:\n'
         f'Problem: {args.problem}\n'
+        f'Target: {target}\n'
         f'Algo: {args.algo}\n'
         f'Pop size: {args.popsize}\n'
-        f'Crossover: {paramsDict[CROSSOVER]}\n'
-        f'Mutation: {paramsDict[MUTATION]}'
     )
     if algoName == 'GeneticAlgorithm':
-        print(f'Fitness: {fitnessFuncName}\n'
-              f'Parent Selection: {parentSelectionName}\n'
-              f'ContinuationRule: {continuationRuleName}')
+        print(
+            f'Fitness: {fitnessFuncName}\n'
+            f'Parent Selection: {parentSelectionName}\n'
+            f'Crossover: {paramsDict[CROSSOVER]}\n'
+            f'ContinuationRule: {continuationRuleName}'
+            f'Mutation: {paramsDict[MUTATION]}'
+
+        )
 
     # find a solution and print it
     solVec = algo.findSolution(GA_MAX_ITER)
