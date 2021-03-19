@@ -18,11 +18,16 @@ class PartiallyMatchedCrossover(Crossover):
 
         indexes = [i for i in range(size)]
         i = 0
+
+        # repeat the process random times
         while len(indexes) > 1 and 1 / (i + 1) < random.random():
+
+            # get random index (without reps)
             index = random.choice(indexes)
             indexes.pop(index)
             indexes.pop(np.where(parent1vec == parent2vec[index])[0])
 
+            # switch the positions
             newChildVec[index] = parent2vec[index]
             newChildVec[np.where(parent1vec == parent2vec[index])] = parent1vec[index]
 

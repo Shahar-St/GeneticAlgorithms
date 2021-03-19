@@ -32,26 +32,33 @@ class PSO(Algorithm):
 
     def findSolution(self, maxIter):
 
-        inertiaArr = np.linspace(0.4, 0.9, num=maxIter)
+        # init the inertia array. if i > j inertia[i] < inertia[j]
+        inertiaArr = np.flip(np.linspace(0.4, 0.9, num=maxIter))
 
+        # iterative improvement
         i = 0
         while not self._solutionFound and i < maxIter:
             j = 0
+            # for each particle:
             while j < len(self._swarm):
                 particle = self._swarm[j]
 
+                # get stochastic element
                 cognitiveRand = random.random()
                 socialRand = random.random()
 
+                # calculate new velocity
                 newInertia = inertiaArr[i] * particle.getVelocity()
                 newCognitiveComp = COGNITIVE_WEIGHT * cognitiveRand * (particle.getPBestVec() - particle.getVec())
                 newSocialComp = SOCIAL_WEIGHT * socialRand * (self._gBestVec - particle.getVec())
                 newVelocity = newInertia + newCognitiveComp + newSocialComp
 
+                # update position and fitness
                 particle.updatePosition(newVelocity)
                 newFitness = self._problem.calculateFitness(particle.getVec())
                 particle.updateFitness(newFitness)
 
+                # update gBest
                 if newFitness < self._gBestVal:
                     self._gBestVal = newFitness
                     self._gBestVec = np.copy(particle.getVec())

@@ -14,7 +14,10 @@ class MinimalConflict(Algorithm):
         size = self._problem.getTargetSize()
         queensPositions = []
 
+        # get all pairs in range
         availPos = [[i, j] for i, j in itertools.product(range(size), range(size))]
+
+        # init the queens position
         for i in range(size):
             pos = random.choice(availPos)
             queensPositions.append(pos)
@@ -25,21 +28,30 @@ class MinimalConflict(Algorithm):
     def findSolution(self, maxIter):
 
         size = self._problem.getTargetSize()
+
+        # iterative improvement
         iterCounter = 0
         while not self._solutionFound() and iterCounter < maxIter:
+
+            # want to minimize this variable
             minAttacks = size + 1
 
+            # get a random queen
             pickedQueenIndex = random.randrange(size)
+
+            # get all possible positions the queen can move into
             availPositions = [[i, j] for i, j in itertools.product(range(size), range(size)) if
                               [i, j] not in self._queensPositions]
             minConflictPosition = (-1, -1)
 
+            # get the minimal conflict position
             for pos in availPositions:
 
                 # move queen to pos
                 priorPosition = self._queensPositions[pickedQueenIndex]
                 self._queensPositions[pickedQueenIndex] = pos
 
+                # calculate the conflict in this position and save the pos if it's the current minimum
                 newNumberOfConflicts = self._specificQueenConflicts(pos)
                 if newNumberOfConflicts < minAttacks:
                     minConflictPosition = pos
@@ -48,9 +60,11 @@ class MinimalConflict(Algorithm):
                 # return the queen to prev place
                 self._queensPositions[pickedQueenIndex] = priorPosition
 
+            # move the queen to the minimal conflict position
             self._queensPositions[pickedQueenIndex] = minConflictPosition
             iterCounter += 1
 
+        # convert the solution to a vector
         solution = np.zeros(size, dtype=int)
         for pos in self._queensPositions:
             solution[pos[0]] = pos[1]
@@ -61,14 +75,19 @@ class MinimalConflict(Algorithm):
     def _solutionFound(self):
 
         tempQueensPos = np.array(self._queensPositions)
+
+        # check rows conflicts
         rows = tempQueensPos[:, 0]
         cols = tempQueensPos[:, 1]
 
+        # if unique rows are less then the rows we have it means we have at least 2 queens on the same row
+        # (same for col)
         if len(rows) != len(set(rows)) or len(cols) != len(set(cols)):
             return False
 
         size = self._problem.getTargetSize()
 
+        # check diagonal conflicts
         i = 0
         while i < size:
             j = i + 1

@@ -1,8 +1,7 @@
-import numpy as np
-
 from fitness.FitnessFunction import FitnessFunction
 
 
+# for N queens
 class DiagonalConflicts(FitnessFunction):
 
     def calculate(self, problem, vector):

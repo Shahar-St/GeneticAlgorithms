@@ -1,6 +1,6 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
-
+# An abstract class that implements and declares common functionality to all entities
 class IndividualEntity(ABC):
 
     def __init__(self, vec):

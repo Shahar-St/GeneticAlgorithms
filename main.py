@@ -12,7 +12,7 @@ from fitness.FitnessFunction import FitnessFunction
 from problems.Problem import Problem
 from util.Consts import *
 
-# returns def and allowed
+# returns default and allowed dicts
 def getParamsDict(problemName):
     if problemName == 'StringMatching':
         return STRING_MATCHING_DEF_PRAMS, STRING_MATCHING_ALLOWED_PARAMS
@@ -49,20 +49,20 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM, help='Problem to be solved')
-
+    # set cmd flags
+    parser.add_argument('-p', '--problem', default=DEFAULT_PROBLEM)
     parser.add_argument('-ps', '--popsize', default=GA_POP_SIZE)
     parser.add_argument('-c', '--cross')
     parser.add_argument('-f', '--fitness')
-    parser.add_argument('-m', '--mutation', help='Mutation function to use')
-    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM, help='The algorithms to use')
-    parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC, help='How to select parents')
-    parser.add_argument('-r', '--continuationRule', default=DEFAULT_CONTINUATION_RULE,
-                        help='How gene move to the next generation (Elite vs Aging)')
-    parser.add_argument('-t', '--target', help='Target to find')
+    parser.add_argument('-m', '--mutation')
+    parser.add_argument('-a', '--algo', default=DEFAULT_ALGORITHM)
+    parser.add_argument('-s', '--parentSelection', default=DEFAULT_PARENT_SELECTION_FUNC)
+    parser.add_argument('-r', '--continuationRule', default=DEFAULT_CONTINUATION_RULE)
+    parser.add_argument('-t', '--target')
 
     args = parser.parse_args()
 
+    # validate input
     if args.problem not in ALLOWED_PROBLEM_NAMES:
         print("invalid problem!\n")
         exit(1)
@@ -113,17 +113,17 @@ def main():
     algoName = args.algo
     fitnessFuncName = paramsDict[FITNESS]
 
+    # init objects based on input
     fitnessFunction = FitnessFunction.factory(fitnessFuncName).calculate
     problem = Problem.factory(problemName=args.problem,
                               fitnessFunction=fitnessFunction,
                               target=paramsDict[TARGET])
     crossoverFunction = Crossover.factory(paramsDict[CROSSOVER]).makeNewChild
-
     parentSelectionFunction = ParentSelection.factory(args.parentSelection).getCandidates
     continuationRuleFunction = ContinuationRule.factory(args.continuationRule).getNextGenAndPotentialParents
-
     mutationFunction = Mutation.factory(paramsDict[MUTATION]).mutate
 
+    # init algo
     algo = Algorithm.factory(algoName=algoName,
                              popSize=int(args.popsize),
                              eliteRate=GA_ELITE_RATE,
@@ -135,6 +135,7 @@ def main():
                              problem=problem
                              )
 
+    # declare on the run parameters
     print(
         '\nRun parameters:\n'
         f'Problem: {algoName}\n'
@@ -146,10 +147,11 @@ def main():
     if algoName == 'GeneticAlgorithm':
         print(f'Fitness: {fitnessFuncName}\n')
 
+    # find a solution and print it
     solVec = algo.findSolution(GA_MAX_ITER)
-
     print(f'Solution = {problem.translateVec(solVec)}\n')
 
+    # print summery of run
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f'Total elapsed time in seconds: {elapsedTime}')

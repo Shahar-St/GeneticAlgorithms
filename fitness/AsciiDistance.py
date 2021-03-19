@@ -9,6 +9,7 @@ class AsciiDistance(FitnessFunction):
         fitness = 0
         targetVec = problem.getTargetVec()
 
+        # sum all distances
         for newVal, targetElement in zip(vector, targetVec):
             fitness += abs(newVal - targetElement)
 

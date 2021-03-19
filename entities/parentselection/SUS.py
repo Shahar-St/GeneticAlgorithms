@@ -9,25 +9,24 @@ class SUS(ParentSelection):
     def getCandidates(self, citizens):
 
         candidates = []
-        sumFitness = 0
+        fitnessSum = 0
         for i in range(len(citizens)):
-            sumFitness += math.sqrt(citizens[i].getFitness())                              # scaling with sqrt
+            fitnessSum += math.sqrt(citizens[i].getFitness())                              # scaling with sqrt
 
-        rateFitnessCitizens = []
+        fitnessRate = []
 
         for i in range(len(citizens)):
-            rateFitnessCitizens.append(math.sqrt(citizens[i].getFitness()) / sumFitness)   # scaling with sqrt
+            fitnessRate.append(math.sqrt(citizens[i].getFitness()) / fitnessSum)   # scaling with sqrt
 
-        rev = np.flip(rateFitnessCitizens)
-        cum_rateFitness = list(np.cumsum(rev))
+        cumFitnessRate = list(np.cumsum(np.flip(fitnessRate)))
 
         r = random.random()
-        for i in range(len(cum_rateFitness)):
+        for i in range(len(cumFitnessRate)):
 
             i = 0
             found = False
-            while i < len(cum_rateFitness) and not found:
-                if r < cum_rateFitness[i]:
+            while i < len(cumFitnessRate) and not found:
+                if r < cumFitnessRate[i]:
                     candidates.append(citizens[i])
                     found = True
                 i += 1

@@ -7,6 +7,7 @@ class ExchangeMutation(Mutation):
 
     def mutate(self, vec):
         vecSize = len(vec)
+        # get two random indexes and exchange them
         index1, index2 = getValidIndexes(vecSize)
 
         temp = vec[index1]

@@ -2,7 +2,7 @@ import string
 
 import psutil
 
-GA_POP_SIZE = 300  # ga population size
+GA_POP_SIZE = 30  # ga population size
 GA_MAX_ITER = 300  # maximum iterations
 
 AGE_MIN_TO_BE_PARENT = 2
@@ -28,10 +28,10 @@ SOCIAL_WEIGHT = 2
 
 '''------------------DEFAULT_PARSER-------------------'''
 
-DEFAULT_PROBLEM = 'Knapsack'
-DEFAULT_ALGORITHM = 'GeneticAlgorithm'
-DEFAULT_PARENT_SELECTION_FUNC = 'StochasticTournament'
-DEFAULT_CONTINUATION_RULE = 'AgingRule'
+DEFAULT_PROBLEM = 'StringMatching'
+DEFAULT_ALGORITHM = 'PSO'
+DEFAULT_PARENT_SELECTION_FUNC = 'RandomParentSelection'
+DEFAULT_CONTINUATION_RULE = 'EliteRule'
 
 '''------------------ALLOWED_PARSER_NAMES-------------------'''
 
@@ -45,7 +45,7 @@ ALLOWED_CONTINUATION_RULE_NAMES = ('AgingRule', 'EliteRule')
 STRING_MATCHING_DEF_PRAMS = {
     'TARGET': 'Hello World!',
     'CROSSOVER': 'UniformCrossover',
-    'FITNESS': 'BullsAndCows',
+    'FITNESS': 'AsciiDistance',
     'MUTATION': 'FlipMutation'
 }
 
@@ -72,7 +72,7 @@ N_QUEENS_ALLOWED_PARAMS = {
 '''--------------N Queens Parameters------------------'''
 
 KNAPSACK_DEF_PRAMS = {
-    'TARGET': 1,
+    'TARGET': 8,
     'CROSSOVER': 'UniformCrossover',
     'FITNESS': 'KnapsackFitness',
     'MUTATION': 'KnapsackFlipMutation'

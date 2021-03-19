@@ -30,6 +30,7 @@ class PsoParticle(IndividualEntity):
         self._vec += newVelocity.astype(int)
 
     def updateFitness(self, fitness):
+        # update pBest if needed
         if fitness < self._fitness:
             self._pBestVec = np.copy(self._vec)
 

@@ -10,18 +10,18 @@ class AgingRule(ContinuationRule, ABC):
 
     def getNextGenAndPotentialParents(self, citizens, _):
 
-        tempCitizens = []
-        secList = []
+        genesUnderAgeLimit = []
+        genesInParentingRange = []
 
         for i in range(len(citizens)):
             citizens[i].increaseAge()
             if (citizens[i].getAge()) < AGE_DIE:
-                tempCitizens.append(citizens[i])
+                genesUnderAgeLimit.append(citizens[i])
 
 
         for i in range(len(citizens)):
             if (citizens[i].getAge()) >= AGE_MIN_TO_BE_PARENT:
-                secList.append(citizens[i])
+                genesInParentingRange.append(citizens[i])
 
-        return tempCitizens, np.array(secList)
+        return genesUnderAgeLimit, np.array(genesInParentingRange)
 

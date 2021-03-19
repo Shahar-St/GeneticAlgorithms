@@ -1,7 +1,7 @@
 import importlib
 from abc import abstractmethod
 
-
+# An abstract class that implements and declares common functionality to all fitness functions
 class FitnessFunction:
 
     @abstractmethod

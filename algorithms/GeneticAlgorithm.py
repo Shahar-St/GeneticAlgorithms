@@ -8,7 +8,7 @@ from entities.GeneticEntity import GeneticEntity
 
 from util.Consts import BEST, CLOCK_RATE
 
-
+# implements the genetic algorithm
 class GeneticAlgorithm(Algorithm):
 
     def __init__(self, problem, popSize, eliteRate, crossoverFunc, mutationRate,
@@ -29,11 +29,14 @@ class GeneticAlgorithm(Algorithm):
         self._continuationRuleFunction = continuationRuleFunction
         self._problem = problem
 
+
     def findSolution(self, maxIter):
 
+        # measure time
         totalRunTime = time.time()
-        self.updateFitness()
 
+        # init the fitness of the citizens
+        self.updateFitness()
         best = self._citizens[BEST]
 
         # iterative improvement
@@ -60,16 +63,22 @@ class GeneticAlgorithm(Algorithm):
 
     def _mate(self):
 
+        # get who continue directly and who's allowed to be a parent
         tempPopulation, secList = self._continuationRuleFunction(self._citizens, self._eliteRate)
 
+        # get the candidates to be parents based on the function that was passed
         candidates = self._parentSelectionFunction(secList)
         candidatesSize = len(candidates)
 
+        # fill in the rest of the population
         while len(tempPopulation) < self._popSize:
+
+            # choose parents and make child
             parent1 = candidates[random.randrange(candidatesSize)]
             parent2 = candidates[random.randrange(candidatesSize)]
             newChild = self._crossoverFunc(parent1, parent2)
 
+            # mutation factor
             if random.random() < self._mutationRate:
                 newChild.setVec(self._mutationFunction(newChild.getVec()))
 
@@ -84,6 +93,7 @@ class GeneticAlgorithm(Algorithm):
             citizen.setFitness(fitnessVal)
             fitnessValues.append(fitnessVal)
 
+        # calculate mean and std of fitness function across all genes
         self._citizens.sort()
         self._mean = np.mean(fitnessValues)
         self._standardDeviation = np.std(fitnessValues)

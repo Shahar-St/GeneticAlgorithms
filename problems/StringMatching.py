@@ -20,7 +20,7 @@ class StringMatching(Problem):
         return np.array([ord(c) for c in randomString])
 
     def translateVec(self, vec):
-        return ''.join([chr(c) for c in vec])
+        return ''.join([chr(c) if 32 <= c <= 120 else '_' for c in vec])
 
     def getTargetVec(self):
         return np.copy(self._targetVec)

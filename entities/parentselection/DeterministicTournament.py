@@ -3,9 +3,7 @@ from math import sqrt
 
 import numpy as np
 
-from entities.GeneticEntity import GeneticEntity
 from entities.parentselection.ParentSelection import ParentSelection
-from util.Consts import BEST
 
 
 class DeterministicTournament(ParentSelection):
@@ -16,13 +14,16 @@ class DeterministicTournament(ParentSelection):
         citizensSize = len(citizens)
 
         for j in range(citizensSize):
+
+            # get a random k (within allowed range)
             k = random.randrange(1, int(sqrt(citizensSize)))
-            participantsTournament = []
+            tournamentParticipants = []
 
             for i in range(k):
-                participantsTournament.append((citizens[random.randrange(len(citizens))]))
+                tournamentParticipants.append((citizens[random.randrange(len(citizens))]))
 
-            winner = min(participantsTournament)
+            # get best gene
+            winner = min(tournamentParticipants)
             candidates.append(winner)
 
         return np.array(candidates)
