@@ -138,7 +138,7 @@ def main():
     # declare on the run parameters
     print(
         '\nRun parameters:\n'
-        f'Problem: {algoName}\n'
+        f'Problem: {args.problem}\n'
         f'Algo: {args.algo}\n'
         f'Pop size: {args.popsize}\n'
         f'Crossover: {paramsDict[CROSSOVER]}\n'

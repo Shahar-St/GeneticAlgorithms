@@ -3,11 +3,10 @@ import string
 import psutil
 
 GA_POP_SIZE = 30  # ga population size
-GA_MAX_ITER = 300  # maximum iterations
+GA_MAX_ITER = 1000  # maximum iterations
 
 AGE_MIN_TO_BE_PARENT = 2
 AGE_DIE = 20
-
 CLOCK_RATE = psutil.cpu_freq().current * (2 ** 20)  # clock ticks per second
 
 UNWANTED_CHARS = ('\t', '\n', '\x0b', '\x0c', '\r')
@@ -44,7 +43,7 @@ ALLOWED_CONTINUATION_RULE_NAMES = ('AgingRule', 'EliteRule')
 '''--------------String Matching Parameters------------------'''
 STRING_MATCHING_DEF_PRAMS = {
     'TARGET': 'Hello World!',
-    'CROSSOVER': 'UniformCrossover',
+    'CROSSOVER': 'TwoPointCrossover',
     'FITNESS': 'AsciiDistance',
     'MUTATION': 'FlipMutation'
 }
@@ -58,7 +57,7 @@ STRING_MATCHING_ALLOWED_PARAMS = {
 '''--------------N Queens Parameters------------------'''
 N_QUEENS_DEF_PRAMS = {
     'TARGET': 8,
-    'CROSSOVER': 'PartiallyMatchedCrossover',
+    'CROSSOVER': 'OrderedCrossover',
     'FITNESS': 'DiagonalConflicts',
     'MUTATION': 'ScrambleMutation'
 }
