@@ -152,8 +152,8 @@ def main():
             f'Fitness: {fitnessFuncName}\n'
             f'Parent Selection: {parentSelectionName}\n'
             f'Crossover: {paramsDict[CROSSOVER]}\n'
-            f'ContinuationRule: {continuationRuleName}'
-            f'Mutation: {paramsDict[MUTATION]}'
+            f'ContinuationRule: {continuationRuleName}\n'
+            f'Mutation: {paramsDict[MUTATION]}\n'
 
         )
 
