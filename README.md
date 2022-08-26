@@ -26,10 +26,9 @@ This is the main repo, some problems/algorithms are in other repos.
 ## Problems
 - CVRP (Capacitated Vehicle Routing Problem)
 - Edge Coloring
-- Multi-Dimentions Knapsack
+- Knapsack and Multi-Dimentions Knapsack
 - N-Queens
-- Knapsack
-
+- 
 ## How can I run it?
 `Python main.py`
 
