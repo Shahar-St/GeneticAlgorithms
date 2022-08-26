@@ -8,22 +8,27 @@ Solving NP-Hard problems using Genetic and other AI algorithms.
 
 This is the main repo, some problems/algorithms are in other repos.
 
-## Problems
-### In this repo
-- N-Queens
-- String Matching
-
-### In other repos
-
 ## Algorithms
-### Genetic Algorithm with the option to provide multiple variations:
-- Crossover
-  - singlePointCrossover
-  - TwoPointCrossover
-  - UniformCrossover
-- Fitness function
-  - BullsAndCows
+- Genetic Algorithm with the option to provide multiple variations:
+  - Crossovers: Single Point Crossover, Two Point Crossover, UniformCrossover
+  - Fitness functions: Bulls And Cows
+  - Continuation Rules: Aging, Elite
+  - Mutations: Flip Mutation, Scramble Mutation
+- PSO (Particle swarm optimization)
+- Minimal Conflict
+- Ant Colony Optimization
+- Simulated Annealing
+- Tabu Search
+- Forward Checking
+- Back Jumping
+- Objective Minimizer
 
+## Problems
+- CVRP (Capacitated Vehicle Routing Problem)
+- Edge Coloring
+- Multi-Dimentions Knapsack
+- N-Queens
+- Knapsack
 
 ## How can I run it?
 `Python main.py`
